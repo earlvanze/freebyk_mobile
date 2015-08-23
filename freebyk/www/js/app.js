@@ -17,3 +17,13 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyAv3u1uLviJaQ8BeFPXFcjCcaIUsvHpxWM',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+})
+
+
