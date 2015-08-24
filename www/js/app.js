@@ -6,7 +6,9 @@
 angular.module('freebyk', 
   ['ionic', 
   'uiGmapgoogle-maps',
-  'freebyk.controller'
+  'freebyk.controller',
+  'ngRoute',
+  'lbServices'
   ])
 
 .run(function($ionicPlatform) {
@@ -30,27 +32,29 @@ angular.module('freebyk',
     });
 })
 
-.config(['$httpProvider', function($httpProvider) {
+.config( function($httpProvider) {
   // $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
    $httpProvider.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
    $httpProvider.defaults.useXDomain = true;
    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-}])
 
-$httpProvider.interceptors.push(function($q, $location, LoopBackAuth) {
-  return {
-    responseError: function(rejection) {
-      if (rejection.status == 401) {
-        //Now clearing the loopback values from client browser for safe logout...
-        LoopBackAuth.clearUser();
-        LoopBackAuth.clearStorage();
-        $location.nextAfterLogin = $location.path();
-        $location.path('/login');
+
+  $httpProvider.interceptors.push(function($q, $location, LoopBackAuth) {
+    return {
+      responseError: function(rejection) {
+        if (rejection.status == 401) {
+          //Now clearing the loopback values from client browser for safe logout...
+          LoopBackAuth.clearUser();
+          LoopBackAuth.clearStorage();
+          $location.nextAfterLogin = $location.path();
+          $location.path('/login');
+        }
+        return $q.reject(rejection);
       }
-      return $q.reject(rejection);
-    }
-  };
+    };
+  });
 })
+
 
 .config(function($stateProvider, $urlRouterProvider){
     $stateProvider
