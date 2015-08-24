@@ -73,6 +73,11 @@ angular.module('freebyk',
       controller: "account_controller",
       templateUrl: "templates/account.html"
     })
+    .state("index", {
+      url: "/index",
+      // TODO: Controller for map: controller: "",
+      templateUrl: "templates/map.html"
+    })
     ;
     $urlRouterProvider.otherwise("/index");
     // $urlRouterProvider.otherwise("/request_pickup");
