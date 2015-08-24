@@ -20,7 +20,11 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "com.ionic.keyboard",
-    "org.apache.cordova.geolocation"
+    "org.apache.cordova.geolocation",
+    {
+      "locator": "https://github.com/katzer/cordova-plugin-badge.git",
+      "id": "de.appplant.cordova.plugin.badge"
+    }
   ],
   "cordovaPlatforms": [
     "ios"
