@@ -32,10 +32,10 @@ angular.module('freebyk',
 	});
 
 	
-  // $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
-   $httpProvider.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
-   $httpProvider.defaults.useXDomain = true;
-   delete $httpProvider.defaults.headers.common['X-Requested-With'];
+	//$httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+	$httpProvider.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
+	$httpProvider.defaults.useXDomain = true;
+	delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
 
   $httpProvider.interceptors.push(function($q, $location, LoopBackAuth) {

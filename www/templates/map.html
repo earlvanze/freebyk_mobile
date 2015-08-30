@@ -4,6 +4,13 @@
 			zoom="map.zoom"
 			draggable="true"
 			>
+      <ui-gmap-marker coords="me.coords"
+		      idKey="me"
+		      ></ui-gmap-marker>
+      <ui-gmap-markers
+	 models="stations"
+	 coords="'long_geolocation'"
+	 ></ui-gmap-markers>
     </ui-gmap-google-map>
   </ion-content>
 </ion-view>

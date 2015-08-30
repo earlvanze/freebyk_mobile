@@ -1,12 +1,42 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi){
-	uiGmapGoogleMapApi.then(function(maps){
-	    $scope.map = {};
-	    $scope.map.center = {latitude: 0.0, longitude: 0.0};
-	    $scope.map.zoom = 14;
-	    $scope.map.options = {};
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
+	navigator.geolocation.getCurrentPosition(function($position){
+	    // success!
+	    setup_map(parseFloat($position.coords.latitude), parseFloat($position.coords.longitude));
+	}, function($error){
+	    setup_map({latitude: 0, longitude: 0});
+	    // error!
 	});
+	var setup_map = function($latitude, $longitude){
+	    uiGmapGoogleMapApi.then(function(maps){
+		$scope.map = {};
+		$scope.map.center = {latitude: parseFloat($latitude),
+				     longitude: parseFloat($longitude)};
+		$scope.map.zoom = 14;
+	    });
+	    $scope.me = {};
+	    $scope.me.coords = {latitude: parseFloat($latitude),
+				longitude: parseFloat($longitude)};
+	    find_nearby_stations($latitude, $longitude, 1);
+	};
+	var find_nearby_stations = function($latitude, $longitude, $distance){
+	    var $location = [$latitude, $longitude];
+
+	    Station.find({filter: {
+		where: {geolocation: {near: $location, maxDistance: $distance}}}})
+		.$promise
+		.then(function($stations){
+		    // recompile latitude, longitude from lat, lng
+		    angular.forEach($stations, function($station){
+			$station.long_geolocation = {
+			    latitude: $station.geolocation.lat,
+			    longitude: $station.geolocation.lng
+			};
+		    });
+		    $scope.stations = $stations;
+		});
+	}
     })
 
 .controller("menu_controller", function($scope, $ionicSideMenuDelegate, $state){
