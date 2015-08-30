@@ -1,4 +1,13 @@
-angular.module("freebyk.controller", [])
+angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
+
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi){
+	uiGmapGoogleMapApi.then(function(maps){
+	    $scope.map = {};
+	    $scope.map.center = {latitude: 0.0, longitude: 0.0};
+	    $scope.map.zoom = 14;
+	    $scope.map.options = {};
+	});
+    })
 
 .controller("menu_controller", function($scope, $ionicSideMenuDelegate, $state){
 

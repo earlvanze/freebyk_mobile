@@ -1,1 +1,9 @@
-/* Empty. Add your own CSS if you like */
+.angular-google-map {
+    width:100%;
+    height:30vh;
+}
+
+.angular-google-map-container {
+    width:100%;
+    height:30vh;
+}

@@ -24,15 +24,14 @@ angular.module('freebyk',
   });
 })
 
-.config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyAv3u1uLviJaQ8BeFPXFcjCcaIUsvHpxWM',
-        v: '3.17',
-        libraries: 'weather,geometry,visualization'
-    });
-})
+    .config( function($httpProvider, uiGmapGoogleMapApiProvider) {
+	uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyAv3u1uLviJaQ8BeFPXFcjCcaIUsvHpxWM',
+            v: '3.20',
+            libraries: ''
+	});
 
-.config( function($httpProvider) {
+	
   // $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
    $httpProvider.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
    $httpProvider.defaults.useXDomain = true;
@@ -75,7 +74,7 @@ angular.module('freebyk',
     })
     .state("index", {
       url: "/index",
-      // TODO: Controller for map: controller: "",
+	controller: "map_controller",
       templateUrl: "templates/map.html"
     })
     ;
