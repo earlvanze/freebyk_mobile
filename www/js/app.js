@@ -11,6 +11,15 @@ angular.module('freebyk',
   'lbServices'
   ])
 
+.config(function(LoopBackResourceProvider) {
+
+  // Use a custom auth header instead of the default 'Authorization'
+  // LoopBackResourceProvider.setAuthHeader('X-Access-Token');
+
+  // Change the URL where to access the LoopBack REST API server
+  LoopBackResourceProvider.setUrlBase('http://freebyk.com:8080/api');
+})
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -24,14 +33,14 @@ angular.module('freebyk',
   });
 })
 
-    .config( function($httpProvider, uiGmapGoogleMapApiProvider) {
+.config( function($httpProvider, uiGmapGoogleMapApiProvider) {
 	uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyAv3u1uLviJaQ8BeFPXFcjCcaIUsvHpxWM',
             v: '3.20',
             libraries: ''
-	});
+});
 
-	
+
 	//$httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
 	$httpProvider.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
 	$httpProvider.defaults.useXDomain = true;
