@@ -51,34 +51,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		}, function(res) {
 			// error
 		})
-<<<<<<< HEAD
-=======
-		.then(function($response){
-		    console.log($response);
-		    //success
-		    if (!$response.data.success){
-		    	if (!$response.data.success){
-		    		console.log($response.data.message)
-		    	}
-		    } else {
-		        // Login was successful
-			    // We need to save the information from the login
-			    $scope.credentials.token = $response.data.token;
-			    store.set('credentials', $scope.credentials);
-			    store.set('user_id', jwtHelper.decodeToken($response.data.token)._id);
-			    store.set('token', $response.data.token);
-			    console.log(store.get('user'));
-		    	console.log($response.data.message);
-    		    console.log($scope.credentials.token);
-    		    // console.log(jwtHelper.decodeToken(store.get('token')));
-		    	$state.go('request_pickup');
-		    }
-		}, function($response){
-		    console.log($response);
-		    console.log("Error: Can't connect to server.");
-		    //error
-		});
->>>>>>> b3023e06f00439b3245ff8a18a5a1063ca90711e
 	}
 
 	// $scope.credentials = {};
