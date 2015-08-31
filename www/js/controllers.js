@@ -1,5 +1,5 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge){
+.controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge){
 	/*
 	$ionicPlatform.ready(function() {
 	    $cordovaBadge.promptForPermission();
@@ -14,11 +14,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	    $scope.setBadge(4);
 	});
 	*/
-
-<<<<<<< HEAD
-.controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
-=======
->>>>>>> 63ae7037a895669840b9ac94cb5e821adea0b25e
 	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
