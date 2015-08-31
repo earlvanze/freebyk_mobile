@@ -8,7 +8,8 @@ angular.module('freebyk',
   'uiGmapgoogle-maps',
   'freebyk.controller',
   'ngRoute',
-  'lbServices'
+   'lbServices',
+   "ngCordova"
   ])
 
 .config(function(LoopBackResourceProvider) {

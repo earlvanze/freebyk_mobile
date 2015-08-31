@@ -11,8 +11,12 @@
 	<ui-gmap-markers
 	   models="stations"
 	   coords="'long_geolocation'"
+	   click="'find_available_destinations()'"
 	   ></ui-gmap-markers>
       </div>
     </ui-gmap-google-map>
+    <button ng-click="find_available_destinations()">
+      debug
+    </button>
   </ion-content>
 </ion-view>
