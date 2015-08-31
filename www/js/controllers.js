@@ -1,6 +1,6 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
+.controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
 	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
@@ -38,18 +38,21 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		    $scope.station_markers.ready = true;
 		});
 	}
-    })
+})
 
 .controller("menu_controller", function($scope, $ionicSideMenuDelegate, $state){
 
 })
 
 .controller("login_controller", function($scope, $http, $state, Bykr, $location){
+	$scope.credentials = {};
 	$scope.login = function() {
 		$scope.loginResult = Bykr.login($scope.credentials, function() {
 			// success
 		}, function(res) {
 			// error
+		    console.log($response);
+			console.log("Error: Can't connect to server.");
 		})
 	}
 
@@ -91,39 +94,51 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	// }
 })
 
-.controller("register_controller", function($scope, $http, $state){
+.controller("register_controller", function($scope, $http, $state, Bykr, $location){
 
     $scope.user = {};
     $scope.register = function(){
-		$http({
-		    url: "http://mealcarrier.com:8080/register",
-		    method: "POST",
-		    data:{
-		    	"first_name": $scope.user.first_name,
-		    	"last_name": $scope.user.last_name,
-				"email": $scope.user.email,
-				"password": $scope.user.password,
-				"confirm_password": $scope.user.confirm_password
-		    }
-		})
-		.then(function($response){
-		    //success
-		    // console.log($scope.user.token);
-		    if (!$response.data.success){
-		    	console.log($response.data.message)
-		    } else {
-		    	console.log($response.data.message);
-			    $scope.user.token = $response.data.token;
-    		    console.log($scope.user.token);
-		    	$state.go('request_pickup');
-		    }
-		},
-		function($response){
-		    console.log($response);
-		    console.log("Error: Can't connect to server.");
-		    //error
-		});
-	}
+	    $scope.user.username = $scope.user.email;
+    	console.log($scope.user);
+    	$scope.bykr = Bykr.create($scope.user), function(err, res) {
+    		console.log(err);
+    		console.log(res);
+    	};
+    }
+		// $http({
+		//     url: "http://mealcarrier.com:8080/register",
+		//     method: "POST",
+		//     data:{
+		//     	"first_name": $scope.user.first_name,
+		//     	"last_name": $scope.user.last_name,
+		// 		"email": $scope.user.email,
+		// 		"password": $scope.user.password,
+		// 		"confirm_password": $scope.user.confirm_password
+		//     }
+		// })
+		// .then(function($response){
+		//     //success
+		//     // console.log($scope.user.token);
+		//     if (!$response.data.success){
+		//     	console.log($response.data.message)
+		//     } else {
+		//     	console.log($response.data.message);
+		// 	    $scope.user.token = $response.data.token;
+		//	    console.log($scope.user.token);
+		//     	$state.go('request_pickup');
+		//     }
+		// },
+		// function($response){
+		//     console.log($response);
+		//     console.log("Error: Can't connect to server.");
+		//     //error
+		// });
 })
 
+.controller("account_controller", function($scope, $http, $state, Bykr, $location){
+	// delete account
+	// change password
+	// charge methods
+	// log out
+})
 ;
