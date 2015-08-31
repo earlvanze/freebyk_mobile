@@ -73,12 +73,9 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 .controller("login_controller", function($scope, $http, $state, Bykr, $location){
 	$scope.credentials = {};
 	$scope.login = function() {
-		$scope.loginResult = Bykr.login($scope.credentials, function() {
-			// success
-		}, function(res) {
-			// error
-		    console.log($response);
-			console.log("Error: Can't connect to server.");
+		Bykr.login($scope.credentials, function(accessToken) {
+			console.log(accessToken);
+			console.log(accessToken.id);
 		})
 	}
 
