@@ -1,6 +1,24 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge){
+	/*
+	$ionicPlatform.ready(function() {
+	    $cordovaBadge.promptForPermission();
+	    
+	    $scope.setBadge = function(value) {
+		$cordovaBadge.hasPermission().then(function(result) {
+		    $cordovaBadge.set(value);
+		}, function(error) {
+		    alert(error);
+		});
+	    }
+	    $scope.setBadge(4);
+	});
+	*/
+	$scope.find_available_destinations = function(marker, event, object){
+	    
+	    alert(1);
+	}
 
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
 	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
