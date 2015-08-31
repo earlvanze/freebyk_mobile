@@ -7,10 +7,12 @@
       <ui-gmap-marker coords="me.coords"
 		      idKey="me"
 		      ></ui-gmap-marker>
-      <ui-gmap-markers
-	 models="stations"
-	 coords="'long_geolocation'"
-	 ></ui-gmap-markers>
+      <div ng-if="station_markers.ready">
+	<ui-gmap-markers
+	   models="stations"
+	   coords="'long_geolocation'"
+	   ></ui-gmap-markers>
+      </div>
     </ui-gmap-google-map>
   </ion-content>
 </ion-view>

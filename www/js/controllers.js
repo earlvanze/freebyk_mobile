@@ -1,6 +1,7 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 
     .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
+	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
 	    setup_map(parseFloat($position.coords.latitude), parseFloat($position.coords.longitude));
@@ -21,20 +22,20 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	    find_nearby_stations($latitude, $longitude, 1);
 	};
 	var find_nearby_stations = function($latitude, $longitude, $distance){
-	    var $location = [$latitude, $longitude];
+	    var $location = {lat: $latitude, lng: $longitude};
 
-	    Station.find({filter: {
-		where: {geolocation: {near: $location, maxDistance: $distance}}}})
+	    Station.nearby({location: $location, distance: 1})
 		.$promise
-		.then(function($stations){
+		.then(function($response){
 		    // recompile latitude, longitude from lat, lng
-		    angular.forEach($stations, function($station){
+		    angular.forEach($response.stations, function($station){
 			$station.long_geolocation = {
 			    latitude: $station.geolocation.lat,
 			    longitude: $station.geolocation.lng
 			};
 		    });
-		    $scope.stations = $stations;
+		    $scope.stations = $response.stations;
+		    $scope.station_markers.ready = true;
 		});
 	}
     })
@@ -56,8 +57,8 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		    }
 		})
 		.then(function($response){
-		    //success
 		    console.log($response);
+		    //success
 		    if (!$response.data.success){
 		    	if (!$response.data.success){
 		    		console.log($response.data.message)

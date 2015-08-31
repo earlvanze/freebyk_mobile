@@ -1,8 +1,8 @@
 {
   "name": "freebyk",
   "app_id": "",
-    "watchPatterns": [
-	"!www/js/.#*",
+  "watchPatterns": [
+    	"!www/js/.#*",
 	"!www/**/.#*",
 	"!www/templates/.#*",
 	"!www/.#*",
