@@ -15,9 +15,18 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 				     longitude: parseFloat($longitude)};
 		$scope.map.zoom = 14;
 	    });
-	    $scope.me = {};
-	    $scope.me.coords = {latitude: parseFloat($latitude),
-				longitude: parseFloat($longitude)};
+	    $scope.me = [{'id':'me',
+					'coords': 
+						{'latitude': parseFloat($latitude),
+						'longitude': parseFloat($longitude)
+						},
+					'icon': "img/mylocation.png",
+					'options': {
+						'icon': {
+							//'scaledSize': new google.maps.Size(34, 44)
+							}
+						},
+					}]; 
 	    find_nearby_stations($latitude, $longitude, 1);
 	};
 	var find_nearby_stations = function($latitude, $longitude, $distance){
@@ -33,6 +42,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			    latitude: $station.geolocation.lat,
 			    longitude: $station.geolocation.lng
 			};
+			$station.icon = "img/stationlocation.png";
 		    });
 		    $scope.stations = $stations;
 		});
