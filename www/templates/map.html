@@ -4,15 +4,19 @@
 			zoom="map.zoom"
 			draggable="true"
 			>
-		<ui-gmap-markers
-	 models="stations"
-	 icon="'icon'"
-	 coords="'long_geolocation'"
-	 ></ui-gmap-markers>
+
       <ui-gmap-markers models="me" coords="'coords'"
 		      idKey="'id'" icon="'icon'"
 		      ></ui-gmap-markers>
       
+      <div ng-if="station_markers.ready">
+	<ui-gmap-markers
+	   models="stations"
+	   	 icon="'icon'"
+	   coords="'long_geolocation'"
+	   ></ui-gmap-markers>
+      </div>
+
     </ui-gmap-google-map>
   </ion-content>
 </ion-view>

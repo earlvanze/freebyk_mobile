@@ -1,6 +1,6 @@
 (function(window, angular, undefined) {'use strict';
 
-var urlBase = "http://www.freebyk.com:8080/api";
+var urlBase = "/api";
 var authHeader = 'authorization';
 
 /**
@@ -1539,6 +1539,40 @@ module.factory(
         "createChangeStream": {
           url: urlBase + "/Stations/change-stream",
           method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Station#nearby
+         * @methodOf lbServices.Station
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `location` – `{geopoint=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `stations` – `{*=}` - 
+         */
+        "nearby": {
+          url: urlBase + "/Stations/nearby",
+          method: "GET"
         },
       }
     );
