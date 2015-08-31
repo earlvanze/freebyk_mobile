@@ -1,6 +1,24 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge){
+	/*
+	$ionicPlatform.ready(function() {
+	    $cordovaBadge.promptForPermission();
+	    
+	    $scope.setBadge = function(value) {
+		$cordovaBadge.hasPermission().then(function(result) {
+		    $cordovaBadge.set(value);
+		}, function(error) {
+		    alert(error);
+		});
+	    }
+	    $scope.setBadge(4);
+	});
+	*/
 
+<<<<<<< HEAD
 .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station){
+=======
+>>>>>>> 63ae7037a895669840b9ac94cb5e821adea0b25e
 	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
@@ -16,9 +34,18 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 				     longitude: parseFloat($longitude)};
 		$scope.map.zoom = 14;
 	    });
-	    $scope.me = {};
-	    $scope.me.coords = {latitude: parseFloat($latitude),
-				longitude: parseFloat($longitude)};
+	    $scope.me = [{'id':'me',
+					'coords': 
+						{'latitude': parseFloat($latitude),
+						'longitude': parseFloat($longitude)
+						},
+					'icon': "img/mylocation.png",
+					'options': {
+						'icon': {
+							//'scaledSize': new google.maps.Size(34, 44)
+							}
+						},
+					}]; 
 	    find_nearby_stations($latitude, $longitude, 1);
 	};
 	var find_nearby_stations = function($latitude, $longitude, $distance){
@@ -28,11 +55,15 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		.$promise
 		.then(function($response){
 		    // recompile latitude, longitude from lat, lng
-		    angular.forEach($response.stations, function($station){
-			$station.long_geolocation = {
-			    latitude: $station.geolocation.lat,
-			    longitude: $station.geolocation.lng
-			};
+		    angular.forEach($response.stations, function(station){
+				station.long_geolocation = {
+				    latitude: station.geolocation.lat,
+				    longitude: station.geolocation.lng
+				};
+				station.icon = "img/stationlocation.png";
+				station.find_available_destinations = function(marker, event, object){
+		    		alert(1);
+				};
 		    });
 		    $scope.stations = $response.stations;
 		    $scope.station_markers.ready = true;
