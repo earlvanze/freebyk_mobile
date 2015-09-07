@@ -14,10 +14,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	    $scope.setBadge(4);
 	});
 	*/
-<<<<<<< HEAD
-
-=======
->>>>>>> 426df3011620885ee41b46eeb9ac36786aa092c1
 	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
@@ -54,17 +50,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		.$promise
 		.then(function($response){
 		    // recompile latitude, longitude from lat, lng
-<<<<<<< HEAD
-		    angular.forEach($response.stations, function($station){
-			$station.long_geolocation = {
-			    latitude: $station.geolocation.lat,
-			    longitude: $station.geolocation.lng
-			};
-			$station.find_available_destinations = function(marker, event, object){
-			    alert(1);
-			};
-
-=======
 		    angular.forEach($response.stations, function(station){
 				station.long_geolocation = {
 				    latitude: station.geolocation.lat,
@@ -74,7 +59,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 				station.find_available_destinations = function(marker, event, object){
 		    		alert(1);
 				};
->>>>>>> 426df3011620885ee41b46eeb9ac36786aa092c1
 		    });
 		    console.log($response.stations);
 		    $scope.stations = $response.stations;
