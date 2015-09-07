@@ -14,10 +14,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	    $scope.setBadge(4);
 	});
 	*/
-	$scope.find_available_destinations = function(marker, event, object){
-	    
-	    alert(1);
-	}
 
 	$scope.station_markers = {ready: false};
 	navigator.geolocation.getCurrentPosition(function($position){
@@ -51,7 +47,12 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			    latitude: $station.geolocation.lat,
 			    longitude: $station.geolocation.lng
 			};
+			$station.find_available_destinations = function(marker, event, object){
+			    alert(1);
+			};
+
 		    });
+		    console.log($response.stations);
 		    $scope.stations = $response.stations;
 		    $scope.station_markers.ready = true;
 		});
