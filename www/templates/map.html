@@ -13,7 +13,7 @@
 	<ui-gmap-markers
 	   models="stations"
 	   coords="'long_geolocation'"
-	   click="'find_available_destinations'"
+	   click="find_available_destinations();"
 	   ></ui-gmap-markers>
       </div>
       <div ng-if="destination_markers.ready">
