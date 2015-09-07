@@ -12,9 +12,15 @@
       <div ng-if="station_markers.ready">
 	<ui-gmap-markers
 	   models="stations"
-	   	 icon="'icon'"
 	   coords="'long_geolocation'"
 	   click="'find_available_destinations'"
+	   ></ui-gmap-markers>
+      </div>
+      <div ng-if="destination_markers.ready">
+	<ui-gmap-markers
+	   models="destinations"
+	   coords="'long_geolocation'"
+	   dorebuildall="true"
 	   ></ui-gmap-markers>
       </div>
 

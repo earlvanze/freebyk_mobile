@@ -880,6 +880,41 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.Bykr#client_token
+         * @methodOf lbServices.Bykr
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `client_token` – `{string=}` - 
+         */
+        "client_token": {
+          url: urlBase + "/bykrs/client_token",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.Bykr#getCurrent
          * @methodOf lbServices.Bykr
          *
@@ -1556,6 +1591,8 @@ module.factory(
          *
          *  - `location` – `{geopoint=}` - 
          *
+         *  - `distance` – `{number=}` - 
+         *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
@@ -1572,6 +1609,42 @@ module.factory(
          */
         "nearby": {
           url: urlBase + "/Stations/nearby",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Station#available_destinations
+         * @methodOf lbServices.Station
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `location` – `{geopoint=}` - 
+         *
+         *  - `distance` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `message` – `{string=}` - 
+         */
+        "available_destinations": {
+          url: urlBase + "/Stations/available_destinations",
           method: "GET"
         },
       }
