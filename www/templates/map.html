@@ -4,16 +4,24 @@
 			zoom="map.zoom"
 			draggable="true"
 			>
-      <ui-gmap-marker coords="me.coords"
-		      idKey="me"
-		      ></ui-gmap-marker>
+
+      <ui-gmap-markers models="me" coords="'coords'"
+		      idKey="'id'" icon="'icon'"
+		      ></ui-gmap-markers>
+      
       <div ng-if="station_markers.ready">
 	<ui-gmap-markers
 	   models="stations"
+	   	 icon="'icon'"
 	   coords="'long_geolocation'"
+<<<<<<< HEAD
 	   click="'find_available_destinations'"
+=======
+	   click="find_available_destinations"
+>>>>>>> 426df3011620885ee41b46eeb9ac36786aa092c1
 	   ></ui-gmap-markers>
       </div>
+
     </ui-gmap-google-map>
   </ion-content>
 </ion-view>
