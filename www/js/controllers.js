@@ -16,6 +16,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	*/
     $scope.station_markers = {ready: false};
     $scope.destination_markers = {ready: false};
+    $scope.route_points_ready = false;
 
     navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
@@ -74,27 +75,24 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 				    	console.log($scope.selected_origin);
 				    	console.log($scope.selected_destination);
 				    	$scope.destinations = [station];
-				    	uiGmapIsReady.promise(1).then(function(instances) {
-					        instances.forEach(function(inst) {
-					            var map = inst.map;
-								var directionsDisplay = new google.maps.DirectionsRenderer;
+				    	
 								var directionsService = new google.maps.DirectionsService;
-								directionsDisplay.setMap(map);
 								directionsService.route({
 								    origin: new google.maps.LatLng($scope.selected_origin.geolocation.lat, $scope.selected_origin.geolocation.lng),
 								    destination: new google.maps.LatLng($scope.selected_destination.geolocation.lat, $scope.selected_destination.geolocation.lng),
 								    travelMode: google.maps.TravelMode.BICYCLING
 								}, function(response, status) {
+									console.log(response);
 								    if (status === google.maps.DirectionsStatus.OK) {
-								      $scope.stations = [];
-								      $scope.destinations = [];
-								      directionsDisplay.setDirections(response);
+								      $scope.route_points = response.routes[0].overview_path;
+								      console.log($scope.route_points);
+								      $scope.stations = [$scope.selected_origin];
+								      $scope.destinations = [$scope.selected_destination];
+								      $scope.route_points_ready = true;
 								    } else {
 								      window.alert('Directions request failed due to ' + status);
 								    }
 								});
-						    });
-					    });
 				    }
 				});
 				$scope.stations = [station];

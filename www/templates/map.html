@@ -26,7 +26,10 @@
 	   click="get_route_info();"
 	   ></ui-gmap-markers>
       </div>
-
+      <div ng-if="route_points_ready">
+     <ui-gmap-polyline path="route_points" fit="true" stroke=" {'color': '#57068C', 'weight':2}">
+     </ui-gmap-polyline>
+     </div>
     </ui-gmap-google-map>
   </ion-content>
 </ion-view>
