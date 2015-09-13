@@ -1,5 +1,5 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge, $ionicPopup){
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup){
 	/*
 	$ionicPlatform.ready(function() {
 	    $cordovaBadge.promptForPermission();
@@ -16,6 +16,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	*/
     $scope.station_markers = {ready: false};
     $scope.destination_markers = {ready: false};
+
     navigator.geolocation.getCurrentPosition(function($position){
 	    // success!
 	    setup_map(parseFloat($position.coords.latitude), parseFloat($position.coords.longitude));
@@ -42,12 +43,12 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			  }
 		      },
 		     }]; 
-	find_nearby_stations($latitude, $longitude, 1);
+	find_nearby_stations($latitude, $longitude, 5);
     };
     var find_nearby_stations = function($latitude, $longitude, $distance){
 	var $location = {lat: $latitude, lng: $longitude};
 	
-	Station.nearby({location: $location, distance: 1})
+	Station.nearby({location: $location, distance: $distance})
 	    .$promise
 	    .then(function($response){
 		// recompile latitude, longitude from lat, lng
@@ -58,6 +59,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		    };
 		    station.icon = "img/source.png";
 		    station.find_available_destinations = function(){
+		    	$scope.selected_origin = station;
 		    	Station.available_destinations({location: station.geolocation, distance: 1})
 			    .$promise
 			    .then(function($response){
@@ -67,6 +69,33 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 					longitude: station.geolocation.lng
 				    };
 				    station.icon = "img/destination.png";
+				    station.get_route_info = function() {
+				    	$scope.selected_destination = station;
+				    	console.log($scope.selected_origin);
+				    	console.log($scope.selected_destination);
+				    	$scope.destinations = [station];
+				    	uiGmapIsReady.promise(1).then(function(instances) {
+					        instances.forEach(function(inst) {
+					            var map = inst.map;
+								var directionsDisplay = new google.maps.DirectionsRenderer;
+								var directionsService = new google.maps.DirectionsService;
+								directionsDisplay.setMap(map);
+								directionsService.route({
+								    origin: new google.maps.LatLng($scope.selected_origin.geolocation.lat, $scope.selected_origin.geolocation.lng),
+								    destination: new google.maps.LatLng($scope.selected_destination.geolocation.lat, $scope.selected_destination.geolocation.lng),
+								    travelMode: google.maps.TravelMode.BICYCLING
+								}, function(response, status) {
+								    if (status === google.maps.DirectionsStatus.OK) {
+								      $scope.stations = [];
+								      $scope.destinations = [];
+								      directionsDisplay.setDirections(response);
+								    } else {
+								      window.alert('Directions request failed due to ' + status);
+								    }
+								});
+						    });
+					    });
+				    }
 				});
 				$scope.stations = [station];
 				$scope.destinations = $response.stations;
