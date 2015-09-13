@@ -1,4 +1,4 @@
-<ion-view view-title="Map">
+<ion-view cache-view="false" view-title="Map">
   <ion-content>
     <ui-gmap-google-map center="map.center"
 			zoom="map.zoom"
@@ -13,6 +13,7 @@
 	<ui-gmap-markers
 	   models="stations"
 	   coords="'long_geolocation'"
+	   icon="'icon'"
 	   click="find_available_destinations();"
 	   ></ui-gmap-markers>
       </div>
@@ -21,6 +22,7 @@
 	   models="destinations"
 	   coords="'long_geolocation'"
 	   dorebuildall="true"
+	   icon="'icon'"
 	   ></ui-gmap-markers>
       </div>
 

@@ -1,5 +1,5 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge){
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, Station, $ionicPlatform, $cordovaBadge, $ionicPopup){
 	/*
 	$ionicPlatform.ready(function() {
 	    $cordovaBadge.promptForPermission();
@@ -56,7 +56,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			latitude: station.geolocation.lat,
 			longitude: station.geolocation.lng
 		    };
-		    station.icon = "img/stationlocation.png";
+		    station.icon = "img/source.png";
 		    station.find_available_destinations = function(){
 		    	Station.available_destinations({location: station.geolocation, distance: 1})
 			    .$promise
@@ -66,16 +66,22 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 					latitude: station.geolocation.lat,
 					longitude: station.geolocation.lng
 				    };
+				    station.icon = "img/destination.png";
 				});
 				$scope.stations = [station];
 				$scope.destinations = $response.stations;
-				console.log($response);
 				$scope.destination_markers.ready = true;
 			    });
 		    };
 		});
 		$scope.stations = $response.stations;
 		$scope.station_markers.ready = true;
+		$ionicPopup.alert({
+				     title: 'Welcome',
+				     template: '<div style="text-align: center">Click on available '+
+				     'stations (in Blue) to see destination stations (in Red). '+
+				     'Then, click on one of the destinations</div>'
+				   });
 	    });
     }
 })
@@ -84,92 +90,66 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	
     })
 
-    .controller("login_controller", function($scope, $http, $state, Bykr, $location){
+    .controller("login_controller", function($scope, $ionicPopup, $rootScope, $window, $http, $state, Bykr, $location){
 	$scope.credentials = {};
 	$scope.login = function() {
-	    Bykr.login($scope.credentials, function(accessToken) {
-			console.log(accessToken);
-			console.log(accessToken.id);
+	    Bykr.login($scope.credentials, function(response) {
+			$window.localStorage['access_token']=response.id;
+			$window.localStorage['user']=response.user;
+			$rootScope.isAuthenticated = true;
+			$rootScope.user = response.user;
+			$ionicPopup.alert({
+				     title: 'Welcome',
+				     template: '<div style="text-align: center">Click on available '+
+				     'stations (in Blue) to see destination stations (in Red). '+
+				     'Then, click on one of the destinations</div>'
+				   });
+			$state.go('index');
+		}, function(response) {
+			$ionicPopup.alert({
+			     title: 'Login Failed',
+			     template: '<div style="text-align: center">Please try again.</div>'
+			   });
 		})
 	}
 
-	// $scope.credentials = {};
-	// $scope.authenticate = function(){
-	// 	$http({
-	// 	    url: "http://mealcarrier.com:8080/authenticate",
-	// 	    method: "POST",
-	// 	    data:{
-	// 			"email": $scope.credentials.email,
-	// 			"password": $scope.credentials.password
-	// 	    }
-	// 	})
-	// 	.then(function($response){
-	// 	    //success
-	// 	    console.log($response);
-	// 	    if (!$response.data.success){
-	// 	    	if (!$response.data.success){
-	// 	    		console.log($response.data.message)
-	// 	    	}
-	// 	    } else {
-	// 	        // Login was successful
-	// 		    // We need to save the information from the login
-	// 		    $scope.credentials.token = $response.data.token;
-	// 		    store.set('credentials', $scope.credentials);
-	// 		    store.set('user_id', jwtHelper.decodeToken($response.data.token)._id);
-	// 		    store.set('token', $response.data.token);
-	// 		    console.log(store.get('user'));
-	// 	    	console.log($response.data.message);
-	//    		    console.log($scope.credentials.token);
-	//    		    // console.log(jwtHelper.decodeToken(store.get('token')));
-	// 	    	$state.go('request_pickup');
-	// 	    }
-	// 	}, function($response){
-	// 	    console.log($response);
-	// 	    console.log("Error: Can't connect to server.");
-	// 	    //error
-	// 	});
-	// }
+	$scope.register = function() {
+		$state.go('register');
+	}
 })
 
-.controller("register_controller", function($scope, $http, $state, Bykr, $location){
+.controller("register_controller", function($scope, $rootScope, $ionicPopup, $http, $state, Bykr, $location){
 
     $scope.user = {};
     $scope.register = function(){
 	    $scope.user.username = $scope.user.email;
-    	console.log($scope.user);
-    	$scope.bykr = Bykr.create($scope.user), function(err, res) {
-    		console.log(err);
-    		console.log(res);
-    	};
+    	$scope.bykr = Bykr.create($scope.user, function(response) {
+	    	Bykr.login({'email':$scope.user.email, 'password':$scope.user.password},
+	    	function(response) {
+				$window.localStorage['access_token']=response.id;
+				$window.localStorage['user']=response.user;
+				$rootScope.isAuthenticated = true;
+				$rootScope.user = response.user;
+				$ionicPopup.alert({
+				     title: 'Welcome',
+				     template: '<div style="text-align: center">Click on available '+
+				     'stations (in Blue) to see destination stations (in Red). '+
+				     'Then, click on one of the destinations</div>'
+				   });
+				$state.go('index');
+			}, function(response) {
+				$ionicPopup.alert({
+				     title: 'Login Failed',
+				     template: '<div style="text-align: center">Please try again.</div>'
+				   });
+			})
+    	}, function(response) {
+    		$ionicPopup.alert({
+			     title: 'Registration Failed',
+			     template: '<div style="text-align: center">Please try again.</div>'
+			   });
+    	});
     }
-		// $http({
-		//     url: "http://mealcarrier.com:8080/register",
-		//     method: "POST",
-		//     data:{
-		//     	"first_name": $scope.user.first_name,
-		//     	"last_name": $scope.user.last_name,
-		// 		"email": $scope.user.email,
-		// 		"password": $scope.user.password,
-		// 		"confirm_password": $scope.user.confirm_password
-		//     }
-		// })
-		// .then(function($response){
-		//     //success
-		//     // console.log($scope.user.token);
-		//     if (!$response.data.success){
-		//     	console.log($response.data.message)
-		//     } else {
-		//     	console.log($response.data.message);
-		// 	    $scope.user.token = $response.data.token;
-		//	    console.log($scope.user.token);
-		//     	$state.go('request_pickup');
-		//     }
-		// },
-		// function($response){
-		//     console.log($response);
-		//     console.log("Error: Can't connect to server.");
-		//     //error
-		// });
 })
 
 .controller("account_controller", function($scope, $http, $state, Bykr, $location){
@@ -177,5 +157,18 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	// change password
 	// charge methods
 	// log out
+})
+
+.controller("logout_controller", function($scope, $window, $ionicPopup, $rootScope, $http, $state, Bykr, $location){
+	$scope.logout = function() {
+	   	$window.localStorage['access_token']='';
+		$rootScope.isAuthenticated = false;
+		$rootScope.user = {};
+		$ionicPopup.alert({
+		     title: 'Logged Out',
+		     template: '<div style="text-align: center">You have logged out successfully.</div>'
+		   });
+		$state.go('index');
+	}
 })
 ;
