@@ -151,7 +151,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	}
 })
 
-.controller("register_controller", function($scope, $rootScope, $ionicPopup, $http, $state, Bykr, $location){
+.controller("register_controller", function($scope, $rootScope, $ionicPopup, $http, $state, Bykr, $location, $window){
 
     $scope.user = {};
     $scope.register = function(){
@@ -219,6 +219,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			console.log(accessToken.id);
 		})
 	}
+})
 
 		// $http({
 		//     url: "http://freebyk.com:8080/users/" + store.get('user_id') + "/payment_methods",
