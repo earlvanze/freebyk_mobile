@@ -1,6 +1,6 @@
 (function(window, angular, undefined) {'use strict';
 
-var urlBase = "/api";
+var urlBase = "http://www.freebyk.com:8080/api";
 var authHeader = 'authorization';
 
 /**
@@ -155,6 +155,33 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use Bykr.agreements.findById() instead.
+        "prototype$__findById__agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/bykrs/:id/agreements/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Bykr.agreements.destroyById() instead.
+        "prototype$__destroyById__agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/bykrs/:id/agreements/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Bykr.agreements.updateById() instead.
+        "prototype$__updateById__agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/bykrs/:id/agreements/:fk",
+          method: "PUT"
+        },
+
         /**
          * @ngdoc method
          * @name lbServices.Bykr#prototype$__get__accessTokens
@@ -289,6 +316,31 @@ module.factory(
          */
         "prototype$__count__accessTokens": {
           url: urlBase + "/bykrs/:id/accessTokens/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Bykr.agreements() instead.
+        "prototype$__get__agreements": {
+          isArray: true,
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Bykr.agreements.create() instead.
+        "prototype$__create__agreements": {
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Bykr.agreements.destroyAll() instead.
+        "prototype$__delete__agreements": {
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Bykr.agreements.count() instead.
+        "prototype$__count__agreements": {
+          url: urlBase + "/bykrs/:id/agreements/count",
           method: "GET"
         },
 
@@ -880,6 +932,85 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.Bykr#client_token
+         * @methodOf lbServices.Bykr
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `customer_id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `client_token` – `{string=}` - 
+         */
+        "client_token": {
+          url: urlBase + "/bykrs/client_token",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr#payment_methods
+         * @methodOf lbServices.Bykr
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `payment_method_nonce` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `payment_method_token` – `{string=}` - 
+         */
+        "payment_methods": {
+          url: urlBase + "/bykrs/payment_methods",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Agreement.bykr() instead.
+        "::get::Agreement::bykr": {
+          url: urlBase + "/Agreements/:id/bykr",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
          * @name lbServices.Bykr#getCurrent
          * @methodOf lbServices.Bykr
          *
@@ -1093,6 +1224,307 @@ module.factory(
     */
     R.modelName = "Bykr";
 
+    /**
+     * @ngdoc object
+     * @name lbServices.Bykr.agreements
+     * @header lbServices.Bykr.agreements
+     * @object
+     * @description
+     *
+     * The object `Bykr.agreements` groups methods
+     * manipulating `Agreement` instances related to `Bykr`.
+     *
+     * Call {@link lbServices.Bykr#agreements Bykr.agreements()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr#agreements
+         * @methodOf lbServices.Bykr
+         *
+         * @description
+         *
+         * Queries agreements of bykr.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        R.agreements = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::get::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#count
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Counts agreements of bykr.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.agreements.count = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::count::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#create
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Creates a new instance in agreements of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        R.agreements.create = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::create::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#createMany
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Creates a new instance in agreements of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        R.agreements.createMany = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::createMany::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#destroyAll
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Deletes all agreements of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.agreements.destroyAll = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::delete::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#destroyById
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Delete a related item by id for agreements.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for agreements
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.agreements.destroyById = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::destroyById::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#findById
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Find a related item by id for agreements.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for agreements
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        R.agreements.findById = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::findById::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr.agreements#updateById
+         * @methodOf lbServices.Bykr.agreements
+         *
+         * @description
+         *
+         * Update a related item by id for agreements.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for agreements
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        R.agreements.updateById = function() {
+          var TargetResource = $injector.get("Agreement");
+          var action = TargetResource["::updateById::bykr::agreements"];
+          return action.apply(R, arguments);
+        };
 
     return R;
   }]);
@@ -1556,6 +1988,8 @@ module.factory(
          *
          *  - `location` – `{geopoint=}` - 
          *
+         *  - `distance` – `{number=}` - 
+         *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
          *
@@ -1572,6 +2006,42 @@ module.factory(
          */
         "nearby": {
           url: urlBase + "/Stations/nearby",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Station#available_destinations
+         * @methodOf lbServices.Station
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `location` – `{geopoint=}` - 
+         *
+         *  - `distance` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `stations` – `{*=}` - 
+         */
+        "available_destinations": {
+          url: urlBase + "/Stations/available_destinations",
           method: "GET"
         },
       }
@@ -1710,6 +2180,726 @@ module.factory(
     */
     R.modelName = "Station";
 
+
+    return R;
+  }]);
+
+/**
+ * @ngdoc object
+ * @name lbServices.Agreement
+ * @header lbServices.Agreement
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `Agreement` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "Agreement",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/Agreements/:id",
+      { 'id': '@id' },
+      {
+
+        // INTERNAL. Use Agreement.bykr() instead.
+        "prototype$__get__bykr": {
+          url: urlBase + "/Agreements/:id/bykr",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#create
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/Agreements",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#createMany
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/Agreements",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#upsert
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/Agreements",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#exists
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/Agreements/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#findById
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/Agreements/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#find
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/Agreements",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#findOne
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/Agreements/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#updateAll
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "updateAll": {
+          url: urlBase + "/Agreements/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#deleteById
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "deleteById": {
+          url: urlBase + "/Agreements/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#count
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/Agreements/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#prototype$updateAttributes
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/Agreements/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#createChangeStream
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/Agreements/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#ftd
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `since` – `{date=}` - 
+         *
+         *  - `grace_minutes` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `ftds` – `{*=}` - 
+         */
+        "ftd": {
+          url: urlBase + "/Agreements/ftd",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Bykr.agreements.findById() instead.
+        "::findById::bykr::agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/bykrs/:id/agreements/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Bykr.agreements.destroyById() instead.
+        "::destroyById::bykr::agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/bykrs/:id/agreements/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Bykr.agreements.updateById() instead.
+        "::updateById::bykr::agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/bykrs/:id/agreements/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Bykr.agreements() instead.
+        "::get::bykr::agreements": {
+          isArray: true,
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Bykr.agreements.create() instead.
+        "::create::bykr::agreements": {
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Bykr.agreements.createMany() instead.
+        "::createMany::bykr::agreements": {
+          isArray: true,
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Bykr.agreements.destroyAll() instead.
+        "::delete::bykr::agreements": {
+          url: urlBase + "/bykrs/:id/agreements",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Bykr.agreements.count() instead.
+        "::count::bykr::agreements": {
+          url: urlBase + "/bykrs/:id/agreements/count",
+          method: "GET"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#updateOrCreate
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Agreement` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#update
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#destroyById
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#removeById
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name lbServices.Agreement#modelName
+    * @propertyOf lbServices.Agreement
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `Agreement`.
+    */
+    R.modelName = "Agreement";
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#bykr
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Fetches belongsTo relation bykr.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Bykr` object.)
+         * </em>
+         */
+        R.bykr = function() {
+          var TargetResource = $injector.get("Bykr");
+          var action = TargetResource["::get::Agreement::bykr"];
+          return action.apply(R, arguments);
+        };
 
     return R;
   }]);
