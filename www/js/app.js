@@ -34,6 +34,19 @@ angular.module('freebyk',
   });
 })
 
+.run(function($window, $rootScope, $state) {
+    
+    if (typeof($window.localStorage['access_token'])!=='undefined' && $window.localStorage['access_token'] !==''){
+      $rootScope.isAuthenticated = true;
+      $rootScope.user = $window.localStorage['user'];
+    }
+    
+    $rootScope.get_refreshed = function() {
+      console.log($state);
+      $state.go($state.current, {}, {reload: true});
+    };
+})
+
 .config( function($httpProvider, uiGmapGoogleMapApiProvider) {
 	uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyAv3u1uLviJaQ8BeFPXFcjCcaIUsvHpxWM',

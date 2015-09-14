@@ -1,9 +1,9 @@
-<ion-view view-title="Map">
+<ion-view cache-view="false" view-title="Map">
   <ion-content>
     <ui-gmap-google-map center="map.center"
 			zoom="map.zoom"
 			draggable="true"
-			>
+			data-tap-disabled="true">
 
       <ui-gmap-markers models="me" coords="'coords'"
 		      idKey="'id'" icon="'icon'"
@@ -12,12 +12,24 @@
       <div ng-if="station_markers.ready">
 	<ui-gmap-markers
 	   models="stations"
-	   	 icon="'icon'"
 	   coords="'long_geolocation'"
-	   click="find_available_destinations"
+	   icon="'icon'"
+	   click="find_available_destinations();"
 	   ></ui-gmap-markers>
       </div>
-
+      <div ng-if="destination_markers.ready">
+	<ui-gmap-markers
+	   models="destinations"
+	   coords="'long_geolocation'"
+	   dorebuildall="true"
+	   icon="'icon'"
+	   click="get_route_info();"
+	   ></ui-gmap-markers>
+      </div>
+      <div ng-if="route_points_ready">
+	<ui-gmap-polyline path="route_points" fit="true" stroke="stroke">
+	</ui-gmap-polyline>
+      </div>
     </ui-gmap-google-map>
   </ion-content>
 </ion-view>

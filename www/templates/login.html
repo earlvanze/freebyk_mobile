@@ -1,4 +1,4 @@
-<ion-view view-title="Login">
+<ion-view cache-view="false" view-title="Login">
   <ion-content>
   <div class="list list-inset">
     <label class="item item-input item-stacked-label">
@@ -16,19 +16,21 @@
   </div>
 
 
-  <div style="text-align: center">
-    <button class="button button-positive"
-    ng-click="login()">
-    Submit
-  </button>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button class="button button-positive"
+      ng-click="login()">
+      Sign In
+    </button>
+    </div>
+
+    <div class="col" style="text-align: center">
+      <button class="button button-positive"
+      ng-click="register()">
+      Register
+    </button>
+    </div>
   </div>
-
-  <h3
-  style="margin-top: 30vh; text-align: center"
-  ui-sref="register">
-  Register
-  </h3>
-
 
   </ion-content>
 </ion-view>
