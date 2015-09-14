@@ -48,7 +48,11 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
     };
     var find_nearby_stations = function($latitude, $longitude, $distance){
 	var $location = {lat: $latitude, lng: $longitude};
-	
+
+	$scope.stroke = {
+	    color: "#57068C",
+	    weight: 2
+	};
 	Station.nearby({location: $location, distance: $distance})
 	    .$promise
 	    .then(function($response){
@@ -75,24 +79,24 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 				    	console.log($scope.selected_origin);
 				    	console.log($scope.selected_destination);
 				    	$scope.destinations = [station];
-				    	
-								var directionsService = new google.maps.DirectionsService;
-								directionsService.route({
-								    origin: new google.maps.LatLng($scope.selected_origin.geolocation.lat, $scope.selected_origin.geolocation.lng),
-								    destination: new google.maps.LatLng($scope.selected_destination.geolocation.lat, $scope.selected_destination.geolocation.lng),
-								    travelMode: google.maps.TravelMode.BICYCLING
-								}, function(response, status) {
-									console.log(response);
-								    if (status === google.maps.DirectionsStatus.OK) {
-								      $scope.route_points = response.routes[0].overview_path;
-								      console.log($scope.route_points);
-								      $scope.stations = [$scope.selected_origin];
-								      $scope.destinations = [$scope.selected_destination];
-								      $scope.route_points_ready = true;
-								    } else {
-								      window.alert('Directions request failed due to ' + status);
-								    }
-								});
+					var directionsService = new google.maps.DirectionsService;
+					directionsService.route({
+					    origin: new google.maps.LatLng($scope.selected_origin.geolocation.lat, $scope.selected_origin.geolocation.lng),
+					    destination: new google.maps.LatLng($scope.selected_destination.geolocation.lat, $scope.selected_destination.geolocation.lng),
+					    travelMode: google.maps.TravelMode.BICYCLING
+					}, function(response, status) {
+					    if (status === google.maps.DirectionsStatus.OK) {
+						$scope.route_points = response.routes[0].overview_path;
+						console.log($scope.route_points);
+						$scope.stations = [$scope.selected_origin];
+						$scope.destinations = [$scope.selected_destination];
+						$scope.$apply(function(){
+						    $scope.route_points_ready = true;
+						});
+					    } else {
+						window.alert('Directions request failed due to ' + status);
+					    }
+					});
 				    }
 				});
 				$scope.stations = [station];
@@ -103,12 +107,14 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		});
 		$scope.stations = $response.stations;
 		$scope.station_markers.ready = true;
+		/*
 		$ionicPopup.alert({
 				     title: 'Welcome',
 				     template: '<div style="text-align: center">Click on available '+
 				     'stations (in Blue) to see destination stations (in Red). '+
 				     'Then, click on one of the destinations</div>'
 				   });
+		*/
 	    });
     }
 })
