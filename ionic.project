@@ -1,13 +1,13 @@
 {
   "name": "freebyk",
-  "app_id": "",
+  "app_id": "f78b6c56",
   "watchPatterns": [
-    	"!www/js/.#*",
-	"!www/**/.#*",
-	"!www/templates/.#*",
-	"!www/.#*",
-	"www/js/[a-zA-Z0-9]*.js",
-	"www/*.html",
-	"www/**/*.html"
-    ]
+    "!www/js/.#*",
+    "!www/**/.#*",
+    "!www/templates/.#*",
+    "!www/.#*",
+    "www/js/[a-zA-Z0-9]*.js",
+    "www/*.html",
+    "www/**/*.html"
+  ]
 }

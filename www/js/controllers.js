@@ -1,5 +1,5 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup){
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout){
 	/*
 	$ionicPlatform.ready(function() {
 	    $cordovaBadge.promptForPermission();
@@ -87,12 +87,36 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 					}, function(response, status) {
 					    if (status === google.maps.DirectionsStatus.OK) {
 						$scope.route_points = response.routes[0].overview_path;
-						console.log($scope.route_points);
+						console.log($scope.selected_origin);
 						$scope.stations = [$scope.selected_origin];
 						$scope.destinations = [$scope.selected_destination];
 						$scope.$apply(function(){
 						    $scope.route_points_ready = true;
 						});
+						$timeout(function() {
+							$ionicPopup.alert({
+						     title: 'Would you like to accept the route?',
+						     template: 'You have to pick up the bike at <strong>{{ selected_origin.stationName }} </strong> and take it to '+
+										'<strong>{{ selected_destination.stationName }}</strong> within an hour.',
+						     scope: $scope,
+						     cssClass: 'accept_route',
+						     buttons: [
+						     	{ text: 'Accept',
+						     	  type: 'button-positive',
+						     	  onTap: function(e) {
+						     	  	$scope.accept_route();
+						     	  }
+						     	},
+						     	{ text: 'Decline',
+						     	  type: 'button-positive',
+						     	  onTap: function(e) {
+						     	  	$scope.get_refreshed();
+						     	  }
+						     	},
+
+						     ]
+						   });
+						}, 1000);
 					    } else {
 						window.alert('Directions request failed due to ' + status);
 					    }
