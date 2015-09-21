@@ -17,13 +17,13 @@ var module = angular.module("lbServices", ['ngResource']);
 
 /**
  * @ngdoc object
- * @name lbServices.Bykr
- * @header lbServices.Bykr
+ * @name lbServices.User
+ * @header lbServices.User
  * @object
  *
  * @description
  *
- * A $resource object for interacting with the `Bykr` model.
+ * A $resource object for interacting with the `User` model.
  *
  * ## Example
  *
@@ -33,17 +33,17 @@ var module = angular.module("lbServices", ['ngResource']);
  *
  */
 module.factory(
-  "Bykr",
+  "User",
   ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
     var R = Resource(
-      urlBase + "/bykrs/:id",
+      urlBase + "/users/:id",
       { 'id': '@id' },
       {
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__findById__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__findById__accessTokens
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -67,21 +67,21 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "prototype$__findById__accessTokens": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/bykrs/:id/accessTokens/:fk",
+          url: urlBase + "/users/:id/accessTokens/:fk",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__destroyById__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__destroyById__accessTokens
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -109,14 +109,14 @@ module.factory(
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/bykrs/:id/accessTokens/:fk",
+          url: urlBase + "/users/:id/accessTokens/:fk",
           method: "DELETE"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__updateById__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__updateById__accessTokens
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -144,52 +144,282 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "prototype$__updateById__accessTokens": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/bykrs/:id/accessTokens/:fk",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use Bykr.agreements.findById() instead.
-        "prototype$__findById__agreements": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/bykrs/:id/agreements/:fk",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Bykr.agreements.destroyById() instead.
-        "prototype$__destroyById__agreements": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/bykrs/:id/agreements/:fk",
-          method: "DELETE"
-        },
-
-        // INTERNAL. Use Bykr.agreements.updateById() instead.
-        "prototype$__updateById__agreements": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/bykrs/:id/agreements/:fk",
+          url: urlBase + "/users/:id/accessTokens/:fk",
           method: "PUT"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__get__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__findById__credentials
+         * @methodOf lbServices.User
          *
          * @description
          *
-         * Queries accessTokens of bykr.
+         * Find a related item by id for credentials.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for credentials
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__findById__credentials": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/credentials/:fk",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__destroyById__credentials
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Delete a related item by id for credentials.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for credentials
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "prototype$__destroyById__credentials": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/credentials/:fk",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__updateById__credentials
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Update a related item by id for credentials.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for credentials
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__updateById__credentials": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/credentials/:fk",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__findById__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Find a related item by id for identities.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for identities
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__findById__identities": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/identities/:fk",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__destroyById__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Delete a related item by id for identities.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for identities
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "prototype$__destroyById__identities": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/identities/:fk",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__updateById__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Update a related item by id for identities.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for identities
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__updateById__identities": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/identities/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.agreements.findById() instead.
+        "prototype$__findById__agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/agreements/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.agreements.destroyById() instead.
+        "prototype$__destroyById__agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/agreements/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.agreements.updateById() instead.
+        "prototype$__updateById__agreements": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/agreements/:fk",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__get__accessTokens
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries accessTokens of user.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -209,19 +439,19 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "prototype$__get__accessTokens": {
           isArray: true,
-          url: urlBase + "/bykrs/:id/accessTokens",
+          url: urlBase + "/users/:id/accessTokens",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__create__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__create__accessTokens
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -247,18 +477,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "prototype$__create__accessTokens": {
-          url: urlBase + "/bykrs/:id/accessTokens",
+          url: urlBase + "/users/:id/accessTokens",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__delete__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__delete__accessTokens
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -281,18 +511,18 @@ module.factory(
          * This method returns no data.
          */
         "prototype$__delete__accessTokens": {
-          url: urlBase + "/bykrs/:id/accessTokens",
+          url: urlBase + "/users/:id/accessTokens",
           method: "DELETE"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$__count__accessTokens
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__count__accessTokens
+         * @methodOf lbServices.User
          *
          * @description
          *
-         * Counts accessTokens of bykr.
+         * Counts accessTokens of user.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -315,39 +545,313 @@ module.factory(
          *  - `count` – `{number=}` - 
          */
         "prototype$__count__accessTokens": {
-          url: urlBase + "/bykrs/:id/accessTokens/count",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Bykr.agreements() instead.
-        "prototype$__get__agreements": {
-          isArray: true,
-          url: urlBase + "/bykrs/:id/agreements",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Bykr.agreements.create() instead.
-        "prototype$__create__agreements": {
-          url: urlBase + "/bykrs/:id/agreements",
-          method: "POST"
-        },
-
-        // INTERNAL. Use Bykr.agreements.destroyAll() instead.
-        "prototype$__delete__agreements": {
-          url: urlBase + "/bykrs/:id/agreements",
-          method: "DELETE"
-        },
-
-        // INTERNAL. Use Bykr.agreements.count() instead.
-        "prototype$__count__agreements": {
-          url: urlBase + "/bykrs/:id/agreements/count",
+          url: urlBase + "/users/:id/accessTokens/count",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#create
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$__get__credentials
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries credentials of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__get__credentials": {
+          isArray: true,
+          url: urlBase + "/users/:id/credentials",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__create__credentials
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Creates a new instance in credentials of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__create__credentials": {
+          url: urlBase + "/users/:id/credentials",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__delete__credentials
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Deletes all credentials of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "prototype$__delete__credentials": {
+          url: urlBase + "/users/:id/credentials",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__count__credentials
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Counts credentials of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "prototype$__count__credentials": {
+          url: urlBase + "/users/:id/credentials/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__get__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries identities of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__get__identities": {
+          isArray: true,
+          url: urlBase + "/users/:id/identities",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__create__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Creates a new instance in identities of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        "prototype$__create__identities": {
+          url: urlBase + "/users/:id/identities",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__delete__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Deletes all identities of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        "prototype$__delete__identities": {
+          url: urlBase + "/users/:id/identities",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#prototype$__count__identities
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Counts identities of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "prototype$__count__identities": {
+          url: urlBase + "/users/:id/identities/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.agreements() instead.
+        "prototype$__get__agreements": {
+          isArray: true,
+          url: urlBase + "/users/:id/agreements",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.agreements.create() instead.
+        "prototype$__create__agreements": {
+          url: urlBase + "/users/:id/agreements",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.agreements.destroyAll() instead.
+        "prototype$__delete__agreements": {
+          url: urlBase + "/users/:id/agreements",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.agreements.count() instead.
+        "prototype$__count__agreements": {
+          url: urlBase + "/users/:id/agreements/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#create
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -374,18 +878,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "create": {
-          url: urlBase + "/bykrs",
+          url: urlBase + "/users",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#createMany
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#createMany
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -412,19 +916,19 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "createMany": {
           isArray: true,
-          url: urlBase + "/bykrs",
+          url: urlBase + "/users",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#upsert
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#upsert
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -451,18 +955,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "upsert": {
-          url: urlBase + "/bykrs",
+          url: urlBase + "/users",
           method: "PUT"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#exists
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#exists
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -487,14 +991,14 @@ module.factory(
          *  - `exists` – `{boolean=}` - 
          */
         "exists": {
-          url: urlBase + "/bykrs/:id/exists",
+          url: urlBase + "/users/:id/exists",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#findById
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#findById
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -518,18 +1022,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "findById": {
-          url: urlBase + "/bykrs/:id",
+          url: urlBase + "/users/:id",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#find
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#find
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -551,19 +1055,19 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "find": {
           isArray: true,
-          url: urlBase + "/bykrs",
+          url: urlBase + "/users",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#findOne
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#findOne
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -585,18 +1089,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "findOne": {
-          url: urlBase + "/bykrs/findOne",
+          url: urlBase + "/users/findOne",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#updateAll
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#updateAll
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -623,14 +1127,14 @@ module.factory(
          * This method returns no data.
          */
         "updateAll": {
-          url: urlBase + "/bykrs/update",
+          url: urlBase + "/users/update",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#deleteById
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#deleteById
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -653,14 +1157,14 @@ module.factory(
          * This method returns no data.
          */
         "deleteById": {
-          url: urlBase + "/bykrs/:id",
+          url: urlBase + "/users/:id",
           method: "DELETE"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#count
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#count
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -685,14 +1189,14 @@ module.factory(
          *  - `count` – `{number=}` - 
          */
         "count": {
-          url: urlBase + "/bykrs/count",
+          url: urlBase + "/users/count",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#prototype$updateAttributes
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#prototype$updateAttributes
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -718,18 +1222,18 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         "prototype$updateAttributes": {
-          url: urlBase + "/bykrs/:id",
+          url: urlBase + "/users/:id",
           method: "PUT"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#createChangeStream
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#createChangeStream
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -759,14 +1263,14 @@ module.factory(
          *  - `changes` – `{ReadableStream=}` - 
          */
         "createChangeStream": {
-          url: urlBase + "/bykrs/change-stream",
+          url: urlBase + "/users/change-stream",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#login
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#login
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -815,14 +1319,14 @@ module.factory(
               return response.resource;
             }
           },
-          url: urlBase + "/bykrs/login",
+          url: urlBase + "/users/login",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#logout
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#logout
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -857,14 +1361,14 @@ module.factory(
               return response.resource;
             }
           },
-          url: urlBase + "/bykrs/logout",
+          url: urlBase + "/users/logout",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#confirm
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#confirm
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -891,14 +1395,14 @@ module.factory(
          * This method returns no data.
          */
         "confirm": {
-          url: urlBase + "/bykrs/confirm",
+          url: urlBase + "/users/confirm",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#resetPassword
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#resetPassword
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -926,14 +1430,14 @@ module.factory(
          * This method returns no data.
          */
         "resetPassword": {
-          url: urlBase + "/bykrs/reset",
+          url: urlBase + "/users/reset",
           method: "POST"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#client_token
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#client_token
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -960,14 +1464,14 @@ module.factory(
          *  - `client_token` – `{string=}` - 
          */
         "client_token": {
-          url: urlBase + "/bykrs/client_token",
+          url: urlBase + "/users/client_token",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#payment_methods
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#payment_methods
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -999,20 +1503,20 @@ module.factory(
          *  - `payment_method_token` – `{string=}` - 
          */
         "payment_methods": {
-          url: urlBase + "/bykrs/payment_methods",
+          url: urlBase + "/users/payment_methods",
           method: "POST"
         },
 
-        // INTERNAL. Use Agreement.bykr() instead.
-        "::get::Agreement::bykr": {
-          url: urlBase + "/Agreements/:id/bykr",
+        // INTERNAL. Use Agreement.user() instead.
+        "::get::Agreement::user": {
+          url: urlBase + "/Agreements/:id/user",
           method: "GET"
         },
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#getCurrent
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#getCurrent
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -1030,7 +1534,7 @@ module.factory(
          *   from the server.
          */
         "getCurrent": {
-           url: urlBase + "/bykrs" + "/:id",
+           url: urlBase + "/users" + "/:id",
            method: "GET",
            params: {
              id: function() {
@@ -1054,8 +1558,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#updateOrCreate
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#updateOrCreate
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -1082,15 +1586,15 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
         R["updateOrCreate"] = R["upsert"];
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#update
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#update
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -1120,8 +1624,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#destroyById
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#destroyById
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -1147,8 +1651,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#removeById
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#removeById
+         * @methodOf lbServices.User
          *
          * @description
          *
@@ -1174,18 +1678,18 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#getCachedCurrent
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#getCachedCurrent
+         * @methodOf lbServices.User
          *
          * @description
          *
          * Get data of the currently logged user that was returned by the last
-         * call to {@link lbServices.Bykr#login} or
-         * {@link lbServices.Bykr#getCurrent}. Return null when there
+         * call to {@link lbServices.User#login} or
+         * {@link lbServices.User#getCurrent}. Return null when there
          * is no user logged in or the data of the current user were not fetched
          * yet.
          *
-         * @returns {Object} A Bykr instance.
+         * @returns {Object} A User instance.
          */
         R.getCachedCurrent = function() {
           var data = LoopBackAuth.currentUserData;
@@ -1194,8 +1698,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#isAuthenticated
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#isAuthenticated
+         * @methodOf lbServices.User
          *
          * @returns {boolean} True if the current user is authenticated (logged in).
          */
@@ -1205,8 +1709,8 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#getCurrentId
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#getCurrentId
+         * @methodOf lbServices.User
          *
          * @returns {Object} Id of the currently logged-in user or null.
          */
@@ -1216,37 +1720,37 @@ module.factory(
 
     /**
     * @ngdoc property
-    * @name lbServices.Bykr#modelName
-    * @propertyOf lbServices.Bykr
+    * @name lbServices.User#modelName
+    * @propertyOf lbServices.User
     * @description
     * The name of the model represented by this $resource,
-    * i.e. `Bykr`.
+    * i.e. `User`.
     */
-    R.modelName = "Bykr";
+    R.modelName = "User";
 
     /**
      * @ngdoc object
-     * @name lbServices.Bykr.agreements
-     * @header lbServices.Bykr.agreements
+     * @name lbServices.User.agreements
+     * @header lbServices.User.agreements
      * @object
      * @description
      *
-     * The object `Bykr.agreements` groups methods
-     * manipulating `Agreement` instances related to `Bykr`.
+     * The object `User.agreements` groups methods
+     * manipulating `Agreement` instances related to `User`.
      *
-     * Call {@link lbServices.Bykr#agreements Bykr.agreements()}
+     * Call {@link lbServices.User#agreements User.agreements()}
      * to query all related instances.
      */
 
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr#agreements
-         * @methodOf lbServices.Bykr
+         * @name lbServices.User#agreements
+         * @methodOf lbServices.User
          *
          * @description
          *
-         * Queries agreements of bykr.
+         * Queries agreements of user.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -1271,18 +1775,18 @@ module.factory(
          */
         R.agreements = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::get::bykr::agreements"];
+          var action = TargetResource["::get::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#count
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#count
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
-         * Counts agreements of bykr.
+         * Counts agreements of user.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -1306,14 +1810,14 @@ module.factory(
          */
         R.agreements.count = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::count::bykr::agreements"];
+          var action = TargetResource["::count::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#create
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#create
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
@@ -1344,14 +1848,14 @@ module.factory(
          */
         R.agreements.create = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::create::bykr::agreements"];
+          var action = TargetResource["::create::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#createMany
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#createMany
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
@@ -1382,14 +1886,14 @@ module.factory(
          */
         R.agreements.createMany = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::createMany::bykr::agreements"];
+          var action = TargetResource["::createMany::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#destroyAll
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#destroyAll
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
@@ -1413,14 +1917,14 @@ module.factory(
          */
         R.agreements.destroyAll = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::delete::bykr::agreements"];
+          var action = TargetResource["::delete::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#destroyById
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#destroyById
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
@@ -1446,14 +1950,14 @@ module.factory(
          */
         R.agreements.destroyById = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::destroyById::bykr::agreements"];
+          var action = TargetResource["::destroyById::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#findById
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#findById
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
@@ -1482,14 +1986,14 @@ module.factory(
          */
         R.agreements.findById = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::findById::bykr::agreements"];
+          var action = TargetResource["::findById::user::agreements"];
           return action.apply(R, arguments);
         };
 
         /**
          * @ngdoc method
-         * @name lbServices.Bykr.agreements#updateById
-         * @methodOf lbServices.Bykr.agreements
+         * @name lbServices.User.agreements#updateById
+         * @methodOf lbServices.User.agreements
          *
          * @description
          *
@@ -1522,7 +2026,7 @@ module.factory(
          */
         R.agreements.updateById = function() {
           var TargetResource = $injector.get("Agreement");
-          var action = TargetResource["::updateById::bykr::agreements"];
+          var action = TargetResource["::updateById::user::agreements"];
           return action.apply(R, arguments);
         };
 
@@ -2209,9 +2713,9 @@ module.factory(
       { 'id': '@id' },
       {
 
-        // INTERNAL. Use Agreement.bykr() instead.
-        "prototype$__get__bykr": {
-          url: urlBase + "/Agreements/:id/bykr",
+        // INTERNAL. Use Agreement.user() instead.
+        "prototype$__get__user": {
+          url: urlBase + "/Agreements/:id/user",
           method: "GET"
         },
 
@@ -2670,62 +3174,62 @@ module.factory(
           method: "GET"
         },
 
-        // INTERNAL. Use Bykr.agreements.findById() instead.
-        "::findById::bykr::agreements": {
+        // INTERNAL. Use User.agreements.findById() instead.
+        "::findById::user::agreements": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/bykrs/:id/agreements/:fk",
+          url: urlBase + "/users/:id/agreements/:fk",
           method: "GET"
         },
 
-        // INTERNAL. Use Bykr.agreements.destroyById() instead.
-        "::destroyById::bykr::agreements": {
+        // INTERNAL. Use User.agreements.destroyById() instead.
+        "::destroyById::user::agreements": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/bykrs/:id/agreements/:fk",
+          url: urlBase + "/users/:id/agreements/:fk",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Bykr.agreements.updateById() instead.
-        "::updateById::bykr::agreements": {
+        // INTERNAL. Use User.agreements.updateById() instead.
+        "::updateById::user::agreements": {
           params: {
           'fk': '@fk'
           },
-          url: urlBase + "/bykrs/:id/agreements/:fk",
+          url: urlBase + "/users/:id/agreements/:fk",
           method: "PUT"
         },
 
-        // INTERNAL. Use Bykr.agreements() instead.
-        "::get::bykr::agreements": {
+        // INTERNAL. Use User.agreements() instead.
+        "::get::user::agreements": {
           isArray: true,
-          url: urlBase + "/bykrs/:id/agreements",
+          url: urlBase + "/users/:id/agreements",
           method: "GET"
         },
 
-        // INTERNAL. Use Bykr.agreements.create() instead.
-        "::create::bykr::agreements": {
-          url: urlBase + "/bykrs/:id/agreements",
+        // INTERNAL. Use User.agreements.create() instead.
+        "::create::user::agreements": {
+          url: urlBase + "/users/:id/agreements",
           method: "POST"
         },
 
-        // INTERNAL. Use Bykr.agreements.createMany() instead.
-        "::createMany::bykr::agreements": {
+        // INTERNAL. Use User.agreements.createMany() instead.
+        "::createMany::user::agreements": {
           isArray: true,
-          url: urlBase + "/bykrs/:id/agreements",
+          url: urlBase + "/users/:id/agreements",
           method: "POST"
         },
 
-        // INTERNAL. Use Bykr.agreements.destroyAll() instead.
-        "::delete::bykr::agreements": {
-          url: urlBase + "/bykrs/:id/agreements",
+        // INTERNAL. Use User.agreements.destroyAll() instead.
+        "::delete::user::agreements": {
+          url: urlBase + "/users/:id/agreements",
           method: "DELETE"
         },
 
-        // INTERNAL. Use Bykr.agreements.count() instead.
-        "::count::bykr::agreements": {
-          url: urlBase + "/bykrs/:id/agreements/count",
+        // INTERNAL. Use User.agreements.count() instead.
+        "::count::user::agreements": {
+          url: urlBase + "/users/:id/agreements/count",
           method: "GET"
         },
       }
@@ -2867,12 +3371,12 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.Agreement#bykr
+         * @name lbServices.Agreement#user
          * @methodOf lbServices.Agreement
          *
          * @description
          *
-         * Fetches belongsTo relation bykr.
+         * Fetches belongsTo relation user.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -2892,12 +3396,12 @@ module.factory(
          *
          * <em>
          * (The remote method definition does not provide any description.
-         * This usually means the response is a `Bykr` object.)
+         * This usually means the response is a `User` object.)
          * </em>
          */
-        R.bykr = function() {
-          var TargetResource = $injector.get("Bykr");
-          var action = TargetResource["::get::Agreement::bykr"];
+        R.user = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::get::Agreement::user"];
           return action.apply(R, arguments);
         };
 
