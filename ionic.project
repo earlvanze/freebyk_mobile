@@ -1,6 +1,6 @@
 {
   "name": "freebyk",
-  "app_id": "f78b6c56",
+  "app_id": "a3eb6ce9",
   "watchPatterns": [
     "!www/js/.#*",
     "!www/**/.#*",

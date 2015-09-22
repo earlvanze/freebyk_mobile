@@ -964,6 +964,45 @@ module.factory(
           method: "GET"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.Bykr#payment_methods
+         * @methodOf lbServices.Bykr
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `payment_method_nonce` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `payment_method_token` – `{string=}` - 
+         */
+        "payment_methods": {
+          url: urlBase + "/bykrs/payment_methods",
+          method: "POST"
+        },
+
         // INTERNAL. Use Agreement.bykr() instead.
         "::get::Agreement::bykr": {
           url: urlBase + "/Agreements/:id/bykr",
@@ -2593,6 +2632,42 @@ module.factory(
         "createChangeStream": {
           url: urlBase + "/Agreements/change-stream",
           method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#ftd
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `since` – `{date=}` - 
+         *
+         *  - `grace_minutes` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `ftds` – `{*=}` - 
+         */
+        "ftd": {
+          url: urlBase + "/Agreements/ftd",
+          method: "GET"
         },
 
         // INTERNAL. Use Bykr.agreements.findById() instead.
