@@ -33,6 +33,9 @@
               <h1 class="title">FreeByk</h1>
               <i class="button button-icon icon ion-loop" ng-click="get_refreshed();"></i>
           </ion-header-bar>
+          <div class="bar bar-loading bar-assertive" ng-click="accept_popup();" ng-if="ready_to_accept">
+            Ready to accept or decline?
+          </div>
           <ion-nav-view></ion-nav-view>
         </ion-side-menu-content>
 

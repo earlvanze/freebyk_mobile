@@ -1,5 +1,5 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout){
+    .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
 	/*
 	$ionicPlatform.ready(function() {
 	    $cordovaBadge.promptForPermission();
@@ -44,7 +44,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			  }
 		      },
 		     }]; 
-	find_nearby_stations($latitude, $longitude, 5);
+	find_nearby_stations($latitude, $longitude, 1);
     };
     var find_nearby_stations = function($latitude, $longitude, $distance){
 	var $location = {lat: $latitude, lng: $longitude};
@@ -64,7 +64,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		    };
 		    station.icon = "img/source.png";
 		    station.find_available_destinations = function(){
-		    	$scope.selected_origin = station;
+		    	$rootScope.selected_origin = station;
 		    	Station.available_destinations({location: station.geolocation, distance: 1})
 			    .$promise
 			    .then(function($response){
@@ -75,48 +75,25 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 				    };
 				    station.icon = "img/destination.png";
 				    station.get_route_info = function() {
-				    	$scope.selected_destination = station;
-				    	console.log($scope.selected_origin);
-				    	console.log($scope.selected_destination);
+				    	$rootScope.selected_destination = station;
 				    	$scope.destinations = [station];
 					var directionsService = new google.maps.DirectionsService;
 					directionsService.route({
-					    origin: new google.maps.LatLng($scope.selected_origin.geolocation.lat, $scope.selected_origin.geolocation.lng),
-					    destination: new google.maps.LatLng($scope.selected_destination.geolocation.lat, $scope.selected_destination.geolocation.lng),
+					    origin: new google.maps.LatLng($rootScope.selected_origin.geolocation.lat, $rootScope.selected_origin.geolocation.lng),
+					    destination: new google.maps.LatLng($rootScope.selected_destination.geolocation.lat, $rootScope.selected_destination.geolocation.lng),
 					    travelMode: google.maps.TravelMode.BICYCLING
 					}, function(response, status) {
 					    if (status === google.maps.DirectionsStatus.OK) {
 						$scope.route_points = response.routes[0].overview_path;
-						console.log($scope.selected_origin);
-						$scope.stations = [$scope.selected_origin];
-						$scope.destinations = [$scope.selected_destination];
+						$scope.stations = [$rootScope.selected_origin];
+						$scope.destinations = [$rootScope.selected_destination];
 						$scope.$apply(function(){
 						    $scope.route_points_ready = true;
 						});
-						$timeout(function() {
-							$ionicPopup.alert({
-						     title: 'Would you like to accept the route?',
-						     template: 'You have to pick up the bike at <strong>{{ selected_origin.stationName }} </strong> and take it to '+
-										'<strong>{{ selected_destination.stationName }}</strong> within an hour.',
-						     scope: $scope,
-						     cssClass: 'accept_route',
-						     buttons: [
-						     	{ text: 'Accept',
-						     	  type: 'button-positive',
-						     	  onTap: function(e) {
-						     	  	$scope.accept_route();
-						     	  }
-						     	},
-						     	{ text: 'Decline',
-						     	  type: 'button-positive',
-						     	  onTap: function(e) {
-						     	  	$scope.get_refreshed();
-						     	  }
-						     	},
-
-						     ]
-						   });
-						}, 1000);
+						$scope.$apply(function() {
+							$rootScope.ready_to_accept = true;
+						});
+						
 					    } else {
 						window.alert('Directions request failed due to ' + status);
 					    }

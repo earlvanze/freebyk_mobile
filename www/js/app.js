@@ -34,7 +34,7 @@ angular.module('freebyk',
   });
 })
 
-.run(function($window, $rootScope, $state) {
+.run(function($window, $rootScope, $state, $ionicPopup) {
     
     if (typeof($window.localStorage['access_token'])!=='undefined' && $window.localStorage['access_token'] !==''){
       $rootScope.isAuthenticated = true;
@@ -42,9 +42,34 @@ angular.module('freebyk',
     }
     
     $rootScope.get_refreshed = function() {
-      console.log($state);
+      $rootScope.ready_to_accept = false;
       $state.go($state.current, {}, {reload: true});
     };
+
+    $rootScope.accept_popup = function() {
+                $ionicPopup.alert({
+                 title: 'Would you like to accept the route?',
+                 template: 'You have to pick up the bike at <strong>{{ selected_origin.stationName }} </strong> and take it to '+
+                    '<strong>{{ selected_destination.stationName }}</strong> within an hour.',
+                 scope: $rootScope,
+                 cssClass: 'accept_route',
+                 buttons: [
+                  { text: 'Accept',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                      $rootScope.accept_route();
+                    }
+                  },
+                  { text: 'Decline',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                      $rootScope.get_refreshed();
+                    }
+                  },
+
+                 ]
+               });
+    }
 })
 
 .config( function($httpProvider, uiGmapGoogleMapApiProvider) {
