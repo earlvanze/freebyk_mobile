@@ -15,13 +15,13 @@
 
 .bar.bar-loading {
   display: block;
-  height: 48px;
+  height: 100px;
   position: absolute !important;
   top: 48 !important;
   width: 100% !important;
   text-align: center;
   padding: 0;
-  line-height: 48px;
+  line-height: 24px;
 
   /* transition 'sliding down' (check below)*/
   -webkit-transition: 200ms all;
