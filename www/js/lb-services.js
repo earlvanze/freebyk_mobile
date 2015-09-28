@@ -1,6 +1,6 @@
 (function(window, angular, undefined) {'use strict';
 
-var urlBase = "http://www.freebyk.com:8080/api";
+var urlBase = "/api";
 var authHeader = 'authorization';
 
 /**
