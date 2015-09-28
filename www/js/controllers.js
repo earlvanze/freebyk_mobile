@@ -1,25 +1,31 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
     .controller("route_accepted_controller", function($scope, sharedProperties, $state, uiGmapGoogleMapApi, $interval,  uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
+			$rootScope.ready_to_accept = false;
+			$rootScope.route_has_been_accepted = true;
+			
+			var makeid = function()
+				{
+				    var text = "";
+				    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+				    for( var i=0; i < 15; i++ )
+				        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+				    return text;
+				};
+
+			if ((typeof(sharedProperties.getProperty()) === 'undefined') || (sharedProperties.getProperty() === '')) {
+				$rootScope.codes = makeid();
+				sharedProperties.setProperty($rootScope.codes)
+			} 
+			
+
     	navigator.geolocation.getCurrentPosition(function($position){
 		    // success!
-		    setup_map(parseFloat($position.coords.latitude), parseFloat($position.coords.longitude));
-		}, function($error){
-		    setup_map({latitude: 0, longitude: 0});
-		    // error!
-		});
-	    var setup_map = function($latitude, $longitude){
-		uiGmapGoogleMapApi.then(function(maps){
-		    $scope.map = {};
-		    $scope.map.center = {latitude: parseFloat($latitude),
-					 longitude: parseFloat($longitude)};
-		    $scope.map.zoom = 14;
-		});
-		$scope.stations = [$rootScope.selected_origin];
-		$scope.destinations = [$rootScope.selected_destination];
-		$scope.me = [{'id':'me',
+		    $scope.me = [{'id':'me',
 		      'coords': 
-		      {'latitude': parseFloat($latitude),
-		       'longitude': parseFloat($longitude)
+		      {'latitude': parseFloat($position.coords.latitude),
+		       'longitude': parseFloat($position.coords.longitude)
 		      },
 		      'icon': "img/mylocation.png",
 		      'options': {
@@ -27,31 +33,18 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			      //'scaledSize': new google.maps.Size(34, 44)
 			  }
 		      },
-		}]; 
+			}]; 
+		}, function($error){
+
+					    // error!
+		});
+		$scope.stations = [$rootScope.selected_origin];
+		$scope.destinations = [$rootScope.selected_destination];
 		
-
-		var makeid = function()
-		{
-		    var text = "";
-		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-		    for( var i=0; i < 15; i++ )
-		        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-		    return text;
-		};
-
-
 		$interval(function() {
-			if ((typeof(sharedProperties.getProperty()) === 'undefined') || (sharedProperties.getProperty() === '')) {
-				$rootScope.codes = makeid();
-				sharedProperties.setProperty($rootScope.codes)
-				$rootScope.ready_to_accept = false;
-				$rootScope.route_has_been_accepted = true;
-			}
-			$state.go("route_accepted", {}, {reload: true});
-		}, 5000);
-		}
+				$state.go("route_accepted", {}, {reload: true});
+		}, 10000);
+		
 	})
 
     .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
@@ -82,10 +75,10 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	});
     var setup_map = function($latitude, $longitude){
 	uiGmapGoogleMapApi.then(function(maps){
-	    $scope.map = {};
-	    $scope.map.center = {latitude: parseFloat($latitude),
+	    $rootScope.map = {};
+	    $rootScope.map.center = {latitude: parseFloat($latitude),
 				 longitude: parseFloat($longitude)};
-	    $scope.map.zoom = 14;
+	    $rootScope.map.zoom = 14;
 	});
 	$scope.me = [{'id':'me',
 		      'coords': 

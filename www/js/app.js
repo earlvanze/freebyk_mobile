@@ -46,34 +46,12 @@ angular.module('freebyk',
       $state.go($state.current, {}, {reload: true});
     };
 
-    $rootScope.accept_popup = function() {
-                $ionicPopup.alert({
-                 title: 'Would you like to accept the route?',
-                 template: 'You have to pick up the bike at <strong>{{ selected_origin.stationName }} </strong> and take it to '+
-                    '<strong>{{ selected_destination.stationName }}</strong> within an hour.',
-                 scope: $rootScope,
-                 cssClass: 'accept_route',
-                 buttons: [
-                  { text: 'Accept',
-                    type: 'button-positive',
-                    onTap: function(e) {
-                      $rootScope.accept_route();
-                    }
-                  },
-                  { text: 'Decline',
-                    type: 'button-positive',
-                    onTap: function(e) {
-                      $rootScope.get_refreshed();
-                    }
-                  },
-
-                 ]
-               });
-
-    }
-
     $rootScope.accept_route = function() {
       $state.go('route_accepted');
+    }
+
+    $rootScope.bike_taken = function() {
+      
     }
 })
 
