@@ -35,36 +35,42 @@
               <h1 class="title">FreeByk</h1>
               <i class="button button-icon icon ion-loop" ng-click="get_refreshed();"></i>
           </ion-header-bar>
-          <ion-header-bar class="bar bar-subheader" ng-if="ready_to_accept" style="height:20vh;">
+          <ion-header-bar class="bar bar-subheader" ng-if="ready_to_accept">
+          <span class="container">
+          <span class="row">
             <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-            <button class="button button-left button-icon ion-close-round " ng-click="get_refreshed();"></button>
+            <button class="button button-icon ion-close-round " ng-click="get_refreshed();"></button>
             </span>
             <span class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             From 
              <strong style="color:black;">{{ selected_origin.stationName }}
              </strong>to
              <strong style="color:black;">{{ selected_destination.stationName }}</strong> 
-             within an hour.
+             within an hour?
              </span>
              <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-            <button class="button button-right button-icon  ion-checkmark-round" ng-click="accept_route();"></button> 
+            <button class="button button-icon  ion-checkmark-round" ng-click="accept_route();"></button> 
             </span>
-           
+          </span>
+          </span>
             
           
           </ion-header-bar>
-         <ion-header-bar class="bar bar-subheader" ng-if="route_has_been_accepted">
+         <ion-header-bar class="bar bar-subheader" ng-if="route_has_been_accepted" >
+         <span class="container">
+         <span class="row">
             <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-            <button class="button button-left button-icon icon ion-close-round " ng-click="get_refreshed();"></button>
+            <button class="button button-icon ion-close-round " ng-click="get_refreshed();"></button>
             </span>
             <span class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            Code:
-            <strong style="color:black;">{{codes}}</strong><br>
-            Got the bike?
+            Got bike with the code: 
+            <strong style="color:black;">{{codes}}</strong>
             </span>
             <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-            <button class="button button-right button-icon icon ion-checkmark-round" ng-click="bike_picked();"></button> 
+            <button class="button button-icon ion-checkmark-round" ng-click="bike_picked();"></button> 
             </span>
+          </span>
+          </span>
         </ion-header-bar>
           
           <ion-nav-view></ion-nav-view>
