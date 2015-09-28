@@ -122,9 +122,15 @@ angular.module('freebyk',
     })
     .state("index", {
       url: "/index",
-	controller: "map_controller",
+      controller: "map_controller",
       templateUrl: "templates/map.html"
     })
+    .state("braintree_payment", {
+      url: "/braintree_payment",
+      controller: "braintree_payment_controller",
+      templateUrl: "templates/braintree_payment.html"
+    })
+
     ;
     $urlRouterProvider.otherwise("/index");
     // $urlRouterProvider.otherwise("/request_pickup");
