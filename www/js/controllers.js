@@ -1,4 +1,59 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
+    .controller("route_accepted_controller", function($scope, sharedProperties, $state, uiGmapGoogleMapApi, $interval,  uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
+    	navigator.geolocation.getCurrentPosition(function($position){
+		    // success!
+		    setup_map(parseFloat($position.coords.latitude), parseFloat($position.coords.longitude));
+		}, function($error){
+		    setup_map({latitude: 0, longitude: 0});
+		    // error!
+		});
+	    var setup_map = function($latitude, $longitude){
+		uiGmapGoogleMapApi.then(function(maps){
+		    $scope.map = {};
+		    $scope.map.center = {latitude: parseFloat($latitude),
+					 longitude: parseFloat($longitude)};
+		    $scope.map.zoom = 14;
+		});
+		$scope.stations = [$rootScope.selected_origin];
+		$scope.destinations = [$rootScope.selected_destination];
+		$scope.me = [{'id':'me',
+		      'coords': 
+		      {'latitude': parseFloat($latitude),
+		       'longitude': parseFloat($longitude)
+		      },
+		      'icon': "img/mylocation.png",
+		      'options': {
+			  'icon': {
+			      //'scaledSize': new google.maps.Size(34, 44)
+			  }
+		      },
+		}]; 
+		
+
+		var makeid = function()
+		{
+		    var text = "";
+		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		    for( var i=0; i < 15; i++ )
+		        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+		    return text;
+		};
+
+
+		$interval(function() {
+			if ((typeof(sharedProperties.getProperty()) === 'undefined') || (sharedProperties.getProperty() === '')) {
+				$rootScope.codes = makeid();
+				sharedProperties.setProperty($rootScope.codes)
+				$rootScope.ready_to_accept = false;
+				$rootScope.route_has_been_accepted = true;
+			}
+			$state.go("route_accepted", {}, {reload: true});
+		}, 5000);
+		}
+	})
+
     .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
 	/*
 	$ionicPlatform.ready(function() {
@@ -84,7 +139,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 					    travelMode: google.maps.TravelMode.BICYCLING
 					}, function(response, status) {
 					    if (status === google.maps.DirectionsStatus.OK) {
-						$scope.route_points = response.routes[0].overview_path;
+						$rootScope.route_points = response.routes[0].overview_path;
 						$scope.stations = [$rootScope.selected_origin];
 						$scope.destinations = [$rootScope.selected_destination];
 						$scope.$apply(function(){
@@ -108,14 +163,14 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		});
 		$scope.stations = $response.stations;
 		$scope.station_markers.ready = true;
-		/*
+		
 		$ionicPopup.alert({
 				     title: 'Welcome',
 				     template: '<div style="text-align: center">Click on available '+
 				     'stations (in Blue) to see destination stations (in Red). '+
 				     'Then, click on one of the destinations</div>'
 				   });
-		*/
+		
 	    });
     }
 })

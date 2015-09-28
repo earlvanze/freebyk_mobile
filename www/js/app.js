@@ -69,8 +69,15 @@ angular.module('freebyk',
 
                  ]
                });
+
+    }
+
+    $rootScope.accept_route = function() {
+      $state.go('route_accepted');
     }
 })
+
+
 
 .config( function($httpProvider, uiGmapGoogleMapApiProvider) {
 	uiGmapGoogleMapApiProvider.configure({
@@ -130,8 +137,25 @@ angular.module('freebyk',
       controller: "braintree_payment_controller",
       templateUrl: "templates/braintree_payment.html"
     })
-
+    .state("route_accepted", {
+      url: "/route_accepted",
+      controller: "route_accepted_controller",
+      templateUrl: "templates/route_accepted.html"
+    })
+    
     ;
     $urlRouterProvider.otherwise("/index");
     // $urlRouterProvider.otherwise("/request_pickup");
 })
+  .service('sharedProperties', function () {
+        var property = '';
+
+        return {
+            getProperty: function () {
+                return property;
+            },
+            setProperty: function(value) {
+                property = value;
+            }
+        };
+    });

@@ -37,7 +37,15 @@
               <i class="button button-icon icon ion-loop" ng-click="get_refreshed();"></i>
           </ion-header-bar>
           <div class="bar bar-loading bar-assertive" ng-click="accept_popup();" ng-if="ready_to_accept">
+            <br>
             Ready to accept or decline?
+          </div>
+          <div class="bar bar-loading bar-assertive" ng-click="bike_taken();" ng-if="route_has_been_accepted">
+            <br>
+            Enter this code when you reach the origin station:
+            <br>{{codes}}
+            <br>
+            Click here when you get the bike.
           </div>
           <ion-nav-view></ion-nav-view>
         </ion-side-menu-content>
