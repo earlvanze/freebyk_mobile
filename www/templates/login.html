@@ -1,5 +1,5 @@
 <ion-view cache-view="false" view-title="Login">
-  <ion-content>
+  <ion-content style="padding-top: 25vh;">
   <div class="list list-inset">
     <label class="item item-input item-stacked-label">
      <span class="input-label">
@@ -31,6 +31,18 @@
     </button>
     </div>
   </div>
-
+<div class="padding">
+  Login With
+  <div class="button-bar" style="text-align: center">
+    <a class="item button button-positive ion-social-facebook"
+    ng-click="login_fb()"></a>
+  <button class="button button-assertive ion-social-google"
+    ng-click="login_google()">
+  </button>
+  <button class="button button-calm ion-social-twitter"
+    ng-click="login_twitter()">
+  </button>
+  </div>
+</div>
   </ion-content>
 </ion-view>

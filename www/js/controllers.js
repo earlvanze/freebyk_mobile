@@ -1,4 +1,4 @@
-angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
+angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
     .controller("route_accepted_controller", function($scope, sharedProperties, $state, uiGmapGoogleMapApi, $interval,  uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
     	navigator.geolocation.getCurrentPosition(function($position){
 		    // success!
@@ -179,7 +179,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	
 })
 
-.controller("login_controller", function($scope, $ionicPopup, $rootScope, $window, $http, $state, User, $location){
+.controller("login_controller", function($scope, $ionicPopup, $rootScope, $window, $http, $state, User, $location, AppAuth, $cookies){
 	$scope.credentials = {};
 	$scope.login = function() {
 	    User.login($scope.credentials, function(response) {
@@ -200,6 +200,27 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			     template: '<div style="text-align: center">Please try again.</div>'
 			   });
 		})
+	}
+
+	if (AppAuth.currentUser === null) {
+		if ($cookies.access_token) {
+			$scope.currentUser =
+			AppAuth.currentUser = { id: 'social' };
+		}
+	}
+	AppAuth.ensureHasCurrentUser(User);
+	$scope.currentUser = AppAuth.currentUser;
+
+	$scope.login_fb = function() {
+		$window.location = '/auth/facebook';
+	}
+
+	$scope.login_google = function() {
+		$window.location = '/auth/google';
+	}
+
+	$scope.login_twitter = function() {
+		$window.location = '/auth/twitter';
 	}
 
 	$scope.register = function() {

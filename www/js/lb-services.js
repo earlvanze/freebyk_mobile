@@ -1358,11 +1358,31 @@ module.factory(
             response: function(response) {
               LoopBackAuth.clearUser();
               LoopBackAuth.clearStorage();
+              delete $cookies["access_token"];
               return response.resource;
             }
           },
           url: urlBase + "/users/logout",
           method: "POST"
+        },
+
+        "getAccount": {
+          url: "/auth/account",
+          method: "GET",
+          interceptor: {
+            response: function(response) {
+              if (response.data.id) {
+                LoopBackAuth.currentUserId = response.data.id;
+                LoopBackAuth.accessTokenId = $cookies.access_token.substring(2, 66);
+              }
+              if (LoopBackAuth.currentUserId === null) {
+                delete $cookies["access_token"];
+                LoopBackAuth.accessTokenId = null;
+              }
+              LoopBackAuth.save();
+              return response.data;
+            }
+          }
         },
 
         /**
@@ -1441,9 +1461,7 @@ module.factory(
          *
          * @description
          *
-         * <em>
-         * (The remote method definition does not provide any description.)
-         * </em>
+         * Get Braintree client token.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -1475,9 +1493,7 @@ module.factory(
          *
          * @description
          *
-         * <em>
-         * (The remote method definition does not provide any description.)
-         * </em>
+         * Get user payment methods
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -2548,6 +2564,18 @@ module.factory(
           url: urlBase + "/Stations/available_destinations",
           method: "GET"
         },
+
+        // INTERNAL. Use Agreement.pickup_station() instead.
+        "::get::Agreement::pickup_station": {
+          url: urlBase + "/Agreements/:id/pickup_station",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Agreement.dropoff_station() instead.
+        "::get::Agreement::dropoff_station": {
+          url: urlBase + "/Agreements/:id/dropoff_station",
+          method: "GET"
+        },
       }
     );
 
@@ -2716,6 +2744,18 @@ module.factory(
         // INTERNAL. Use Agreement.user() instead.
         "prototype$__get__user": {
           url: urlBase + "/Agreements/:id/user",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Agreement.pickup_station() instead.
+        "prototype$__get__pickup_station": {
+          url: urlBase + "/Agreements/:id/pickup_station",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Agreement.dropoff_station() instead.
+        "prototype$__get__dropoff_station": {
+          url: urlBase + "/Agreements/:id/dropoff_station",
           method: "GET"
         },
 
@@ -3168,10 +3208,91 @@ module.factory(
          * Data properties:
          *
          *  - `ftds` – `{*=}` - 
+         *
+         *  - `total_distance` – `{number=}` - 
          */
         "ftd": {
           url: urlBase + "/Agreements/ftd",
           method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#confirmed
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `since` – `{date=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `confirmed` – `{*=}` - 
+         *
+         *  - `total_distance` – `{number=}` - 
+         */
+        "confirmed": {
+          url: urlBase + "/Agreements/confirmed",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#add
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `pickup_station_id` – `{number=}` - 
+         *
+         *  - `dropoff_station_id` – `{number=}` - 
+         *
+         *  - `userId` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `agreement` – `{object=}` - 
+         */
+        "add": {
+          url: urlBase + "/Agreements/add",
+          method: "POST"
         },
 
         // INTERNAL. Use User.agreements.findById() instead.
@@ -3402,6 +3523,78 @@ module.factory(
         R.user = function() {
           var TargetResource = $injector.get("User");
           var action = TargetResource["::get::Agreement::user"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#pickup_station
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Fetches belongsTo relation pickup_station.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Station` object.)
+         * </em>
+         */
+        R.pickup_station = function() {
+          var TargetResource = $injector.get("Station");
+          var action = TargetResource["::get::Agreement::pickup_station"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Agreement#dropoff_station
+         * @methodOf lbServices.Agreement
+         *
+         * @description
+         *
+         * Fetches belongsTo relation dropoff_station.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Station` object.)
+         * </em>
+         */
+        R.dropoff_station = function() {
+          var TargetResource = $injector.get("Station");
+          var action = TargetResource["::get::Agreement::dropoff_station"];
           return action.apply(R, arguments);
         };
 
