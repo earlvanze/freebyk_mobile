@@ -1,5 +1,87 @@
 angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
-    .controller("route_accepted_controller", function($scope, sharedProperties, $state, uiGmapGoogleMapApi, $interval,  uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
+    
+    .controller("bike_picked_controller", function($scope, Agreement, sharedProperties, $state, uiGmapGoogleMapApi, $interval,  uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
+			
+
+			$rootScope.ready_to_accept = false;
+			$rootScope.route_has_been_accepted = false;
+			$rootScope.thank_you = true;
+			$rootScope.delivered = function() {
+				Agreement.create({
+				"pickup_station_id": $rootScope.selected_origin.id,
+				"dropoff_station_id": $rootScope.selected_destination.id,
+				"userId": $rootScope.user.id,
+				"delivered": true,
+				});
+				$rootScope.ready_to_accept = false;
+				$rootScope.route_has_been_accepted = false;
+				$rootScope.thank_you = false;
+				$rootScope.selected_origin = [];
+				$rootScope.selected_destination = [];
+				$state.go('index');
+			}
+
+			$rootScope.not_delivered = function() {
+				Agreement.create({
+				"pickup_station_id": $rootScope.selected_origin.id,
+				"dropoff_station_id": $rootScope.selected_destination.id,
+				"userId": $rootScope.user.id,
+				"delivered": false,
+				});
+				$rootScope.ready_to_accept = false;
+				$rootScope.route_has_been_accepted = false;
+				$rootScope.thank_you = false;
+				$rootScope.selected_origin = [];
+				$rootScope.selected_destination = [];
+				$state.go('index');
+			}
+
+    	navigator.geolocation.getCurrentPosition(function($position){
+		    // success!
+		    $scope.me = [{'id':'me',
+		      'coords': 
+		      {'latitude': parseFloat($position.coords.latitude),
+		       'longitude': parseFloat($position.coords.longitude)
+		      },
+		      'icon': "img/mylocation.png",
+		      'options': {
+			  'icon': {
+			      //'scaledSize': new google.maps.Size(34, 44)
+			  }
+		      },
+			}]; 
+		}, function($error){
+
+					    // error!
+		});
+		$scope.stations = [$rootScope.selected_origin];
+		$scope.destinations = [$rootScope.selected_destination];
+		
+		$interval(function() {
+				navigator.geolocation.getCurrentPosition(function($position){
+				    // success!
+				    $scope.$apply(function(){
+				    $scope.me = [{'id':'me',
+				      'coords': 
+				      {'latitude': parseFloat($position.coords.latitude),
+				       'longitude': parseFloat($position.coords.longitude)
+				      },
+				      'icon': "img/mylocation.png",
+				      'options': {
+					  'icon': {
+					      //'scaledSize': new google.maps.Size(34, 44)
+					  }
+				      },
+					}]; 
+					});
+				}, function($error){
+
+							    // error!
+				});
+		}, 10000);
+		
+	})
+    .controller("route_accepted_controller", function($scope, Agreement, sharedProperties, $state, uiGmapGoogleMapApi, $interval,  uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
 			$rootScope.ready_to_accept = false;
 			$rootScope.route_has_been_accepted = true;
 			
@@ -15,6 +97,12 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
 				};
 
 			if ((typeof(sharedProperties.getProperty()) === 'undefined') || (sharedProperties.getProperty() === '')) {
+				Agreement.create({
+					"pickup_station_id": $rootScope.selected_origin.id,
+					"dropoff_station_id": $rootScope.selected_destination.id,
+					"userId": $rootScope.user.id,
+					"delivered": false,
+				});
 				$rootScope.codes = makeid();
 				sharedProperties.setProperty($rootScope.codes)
 			} 
@@ -42,9 +130,28 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
 		$scope.destinations = [$rootScope.selected_destination];
 		
 		$interval(function() {
-				$state.go("route_accepted", {}, {reload: true});
+				navigator.geolocation.getCurrentPosition(function($position){
+				    // success!
+				    $scope.$apply(function(){
+				    $scope.me = [{'id':'me',
+				      'coords': 
+				      {'latitude': parseFloat($position.coords.latitude),
+				       'longitude': parseFloat($position.coords.longitude)
+				      },
+				      'icon': "img/mylocation.png",
+				      'options': {
+					  'icon': {
+					      //'scaledSize': new google.maps.Size(34, 44)
+					  }
+				      },
+					}]; 
+					});
+				}, function($error){
+
+							    // error!
+				});
 		}, 10000);
-		
+
 	})
 
     .controller("map_controller", function($scope, $state, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){

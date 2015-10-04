@@ -52,8 +52,8 @@ angular.module('freebyk',
       $state.go('route_accepted');
     }
 
-    $rootScope.bike_taken = function() {
-      
+    $rootScope.bike_picked = function() {
+      $state.go('bike_picked');
     }
 })
 
@@ -122,7 +122,11 @@ angular.module('freebyk',
       controller: "route_accepted_controller",
       templateUrl: "templates/route_accepted.html"
     })
-
+    .state("bike_picked", {
+      url: "/bike_picked",
+      controller: "bike_picked_controller",
+      templateUrl: "templates/bike_picked.html"
+    })
     ;
     $urlRouterProvider.otherwise("/index");
     // $urlRouterProvider.otherwise("/request_pickup");

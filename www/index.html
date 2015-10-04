@@ -37,12 +37,12 @@
               <i class="button button-icon icon ion-loop" ng-click="get_refreshed();"></i>
           </ion-header-bar>
           <ion-header-bar class="bar bar-subheader">
-          <span class="container" ng-if="bikes_available && !ready_to_accept && !route_has_been_accepted">
+          <span class="container" ng-if="bikes_available && !ready_to_accept && !route_has_been_accepted && !thank_you">
           <div style="text-align: center">
             Bikes are available at the marked stations. 
           </div>
           </span>
-          <span class="container" ng-if="!bikes_available && !ready_to_accept && !route_has_been_accepted">
+          <span class="container" ng-if="!bikes_available && !ready_to_accept && !route_has_been_accepted && !thank_you">
             <div style="text-align: center">
             Bikes are not available at this moment.
             </div>
@@ -79,6 +79,20 @@
             </span>
           </span>
           </span>
+
+          <span class="container" ng-if="thank_you" >
+           <span class="row">
+              <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <button class="button button-icon ion-close-round " ng-click="not_delivered();"></button>
+              </span>
+              <span class="col-xs-10 col-sm-10 col-md-10 col-lg-10" >
+              [Countdown] Were you able to deliver?
+              </span>
+              <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <button class="button button-icon ion-checkmark-round" ng-click="delivered();"></button> 
+              </span>
+            </span>
+            </span>
         </ion-header-bar>
           
           <ion-nav-view></ion-nav-view>
