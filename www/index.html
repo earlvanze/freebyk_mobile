@@ -35,18 +35,27 @@
               <h1 class="title">FreeByk</h1>
               <i class="button button-icon icon ion-loop" ng-click="get_refreshed();"></i>
           </ion-header-bar>
-          <ion-header-bar class="bar bar-subheader" ng-if="ready_to_accept">
-          <span class="container">
+          <ion-header-bar class="bar bar-subheader">
+          <span class="container" ng-if="bikes_available && !ready_to_accept && !route_has_been_accepted">
+          <div style="text-align: center">
+            Bikes are available at the marked stations. 
+          </div>
+          </span>
+          <span class="container" ng-if="!bikes_available && !ready_to_accept && !route_has_been_accepted">
+            <div style="text-align: center">
+            Bikes are not available at this moment.
+            </div>
+          </span>
+          <span class="container" ng-if="ready_to_accept">
           <span class="row">
             <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
             <button class="button button-icon ion-close-round " ng-click="get_refreshed();"></button>
             </span>
             <span class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            From 
              <strong style="color:black;">{{ selected_origin.stationName }}
              </strong>to
              <strong style="color:black;">{{ selected_destination.stationName }}</strong> 
-             within an hour?
+             in an hour?
              </span>
              <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
             <button class="button button-icon  ion-checkmark-round" ng-click="accept_route();"></button> 
@@ -54,17 +63,15 @@
           </span>
           </span>
             
-          
-          </ion-header-bar>
-         <ion-header-bar class="bar bar-subheader" ng-if="route_has_been_accepted" >
-         <span class="container">
+         <span class="container" ng-if="route_has_been_accepted" >
          <span class="row">
             <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
             <button class="button button-icon ion-close-round " ng-click="get_refreshed();"></button>
             </span>
-            <span class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            Got bike with the code: 
-            <strong style="color:black;">{{codes}}</strong>
+            <span class="col-xs-10 col-sm-10 col-md-10 col-lg-10" >
+            With code 
+            <strong style="color:black;">{{codes}} ,</strong>
+            did you get the bike?
             </span>
             <span class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
             <button class="button button-icon ion-checkmark-round" ng-click="bike_picked();"></button> 

@@ -47,7 +47,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		
 	})
 
-    .controller("map_controller", function($scope, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
+    .controller("map_controller", function($scope, $state, uiGmapGoogleMapApi, uiGmapIsReady, Station, $ionicPlatform, $cordovaBadge, $ionicPopup, $timeout, $rootScope){
 	/*
 	$ionicPlatform.ready(function() {
 	    $cordovaBadge.promptForPermission();
@@ -104,6 +104,8 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 	Station.nearby({location: $location, distance: $distance})
 	    .$promise
 	    .then(function($response){
+	    if ($response.stations.length >0) $rootScope.bikes_available = true;
+	    else $rootScope.bikes_available = false;
 		// recompile latitude, longitude from lat, lng
 		angular.forEach($response.stations, function(station){
 		    station.long_geolocation = {
@@ -112,6 +114,26 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		    };
 		    station.icon = "img/source.png";
 		    station.find_available_destinations = function(){
+		    	if (typeof($rootScope.isAuthenticated)==='undefined' || $rootScope.isAuthenticated == false ){
+		    		$ionicPopup.alert({
+				     title: 'Please Login',
+				     buttons: [ {text: 'Cancel'},
+				     	{
+				     		text: 'Login',
+				     		type: 'button-positive',
+				     		onTap: function(e) {
+				     			$state.go('login');
+				     		}
+				     	}
+
+
+				     ]
+
+				   });
+		    		return;
+		    	}
+
+				
 		    	$rootScope.selected_origin = station;
 		    	Station.available_destinations({location: station.geolocation, distance: 1})
 			    .$promise
@@ -157,14 +179,7 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 		$scope.stations = $response.stations;
 		$scope.station_markers.ready = true;
 		
-		$ionicPopup.alert({
-				     title: 'Welcome',
-				     template: '<div style="text-align: center">Click on available '+
-				     'stations (in Blue) to see destination stations (in Red). '+
-				     'Then, click on one of the destinations</div>'
-				   });
-		
-	    });
+		});
     }
 })
 
@@ -180,12 +195,6 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps"])
 			$window.localStorage['user']=response.user;
 			$rootScope.isAuthenticated = true;
 			$rootScope.user = response.user;
-			$ionicPopup.alert({
-				     title: 'Welcome',
-				     template: '<div style="text-align: center">Click on available '+
-				     'stations (in Blue) to see destination stations (in Red). '+
-				     'Then, click on one of the destinations</div>'
-				   });
 			$state.go('index');
 		}, function(response) {
 			$ionicPopup.alert({
