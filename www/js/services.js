@@ -1,4 +1,4 @@
-angular.module("freebyk.services", [])
+angular.module("freebyk.services", ['lbServices'])
     .factory('PaymentMethods', ['$http', "$q", function($http, $q) {
         // var payment_methods = store.get('payment_methods') || [];
         // var payment_methods = [];
@@ -45,5 +45,32 @@ angular.module("freebyk.services", [])
         };
         return factory;
     }])
+
+	.factory('AppAuth', function() {
+		return {
+			currentUser: null,
+
+			ensureHasCurrentUser: function(User) {
+				if (this.currentUser) {
+					if (this.currentUser.id === 'social') {
+						this.currentUser = User.getAccount(function() {
+						  // success
+						}, function () {
+						  console.log('User.getAccount() err', arguments);
+						});
+					} else {
+					console.log('Using cached current user.');
+					}
+				} else {
+					console.log('Fetching current user from the server.');
+					this.currentUser = User.getCurrent(function() {
+					// success
+					}, function(response) {
+						console.log('User.getCurrent() err', arguments);
+					});
+				}
+			}
+		};
+	})
 
 ;

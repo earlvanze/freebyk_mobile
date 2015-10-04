@@ -9,7 +9,9 @@ angular.module('freebyk',
   'freebyk.controller',
   'ngRoute',
    'lbServices',
-   "ngCordova"
+   "ngCordova",
+   "freebyk.services",
+   "ngCookies"
   ])
 
 .config(function(LoopBackResourceProvider) {
@@ -120,7 +122,7 @@ angular.module('freebyk',
       controller: "route_accepted_controller",
       templateUrl: "templates/route_accepted.html"
     })
-    
+
     ;
     $urlRouterProvider.otherwise("/index");
     // $urlRouterProvider.otherwise("/request_pickup");
