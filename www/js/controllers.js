@@ -7,12 +7,8 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
 			$rootScope.route_has_been_accepted = false;
 			$rootScope.thank_you = true;
 			$rootScope.delivered = function() {
-				Agreement.create({
-				"pickup_station_id": $rootScope.selected_origin.id,
-				"dropoff_station_id": $rootScope.selected_destination.id,
-				"userId": $rootScope.user.id,
-				"delivered": true,
-				});
+				$rootScope.agreement.delivered = true;
+				$rootScope.agreement.$save();
 				$rootScope.ready_to_accept = false;
 				$rootScope.route_has_been_accepted = false;
 				$rootScope.thank_you = false;
@@ -22,17 +18,12 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
 			}
 
 			$rootScope.not_delivered = function() {
-				Agreement.create({
-				"pickup_station_id": $rootScope.selected_origin.id,
-				"dropoff_station_id": $rootScope.selected_destination.id,
-				"userId": $rootScope.user.id,
-				"delivered": false,
-				});
 				$rootScope.ready_to_accept = false;
 				$rootScope.route_has_been_accepted = false;
 				$rootScope.thank_you = false;
 				$rootScope.selected_origin = [];
 				$rootScope.selected_destination = [];
+
 				$state.go('index');
 			}
 
@@ -102,7 +93,10 @@ angular.module("freebyk.controller", ["uiGmapgoogle-maps", 'ngCookies'])
 					"dropoff_station_id": $rootScope.selected_destination.id,
 					"userId": $rootScope.user.id,
 					"delivered": false,
-				});
+				}).$promise
+	    			.then(function($response){
+	    				$rootScope.agreement = $response;
+	    			});
 				$rootScope.codes = makeid();
 				sharedProperties.setProperty($rootScope.codes)
 			} 
