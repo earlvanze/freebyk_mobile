@@ -20,7 +20,7 @@ angular.module('freebyk',
   // LoopBackResourceProvider.setAuthHeader('X-Access-Token');
 
   // Change the URL where to access the LoopBack REST API server
-  LoopBackResourceProvider.setUrlBase('http://freebyk.com:8080/api');
+  LoopBackResourceProvider.setUrlBase('http://freebyk.arova.xyz:8080/api');
 })
 
 .run(function($ionicPlatform) {
